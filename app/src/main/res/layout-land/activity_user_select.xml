@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context="com.example.Allstate.speakitvisualcommunication.Project.Allstate.speakitvisualcommunication.UserSelect">
+    tools:context="project.allstate.speakitvisualcommunication.UserSelect">
 
     <TextView
         android:layout_width="wrap_content"

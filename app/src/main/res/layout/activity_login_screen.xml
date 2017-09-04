@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:textAlignment="center"
     android:background="#ffffff"
-    tools:context="com.example.Allstate.speakitvisualcommunication.Project.Allstate.speakitvisualcommunication.LoginScreen">
+    tools:context="project.allstate.speakitvisualcommunication.LoginScreen">
 
   <ImageView
       android:layout_width="150dp"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.Allstate.speakitvisualcommunication.Project.Allstate.speakitvisualcommunication.RegisterActivity">
+    tools:context="project.allstate.speakitvisualcommunication.RegisterActivity">
 
     <EditText
         android:id="@+id/editText"

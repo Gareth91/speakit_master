@@ -4,20 +4,21 @@
     android:shape="rectangle" >
     <!-- View background color -->
     <solid
-        android:color="#ffffff" >
+        android:color="#B8D6B8" >
 
     </solid>
     <!-- View border color and width -->
     <stroke
-        android:width="2.5dp"
-        android:color="@android:color/transparent" >
+        android:width="2dp"
+        android:color= "@android:color/transparent" >
 
     </stroke>
     <!-- The radius makes the corners rounded -->
     <corners
-        android:radius="30dp"   >
+        android:topLeftRadius="30dp"
+        android:topRightRadius="30dp"
+        android:bottomLeftRadius="0dp"
+        android:bottomRightRadius="0dp"  >
 
     </corners>
 </shape>
-
-

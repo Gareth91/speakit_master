@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context="com.example.Allstate.speakitvisualcommunication.Project.Allstate.speakitvisualcommunication.MainScreen">
+    tools:context="project.allstate.speakitvisualcommunication.MainScreen">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
