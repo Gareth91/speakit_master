@@ -19,12 +19,13 @@
     <ImageView
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:src="@drawable/seeyou"
+        android:src="@drawable/user_wave"
         android:scaleType="fitXY"
         android:id="@+id/imageView"
-        android:layout_marginTop="12dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginEnd="54dp"
+        android:layout_alignBottom="@+id/buttonAddUser"
+        android:layout_toStartOf="@+id/buttonAddUser"
+        android:layout_marginBottom="12dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,13 +35,13 @@
         android:paddingLeft="3dp"
         android:id="@+id/textView2"
         android:layout_marginStart="17dp"
-        android:layout_alignTop="@+id/textView"
-        android:layout_alignParentStart="true" />
+        android:layout_above="@+id/userlistView"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="13dp" />
 
     <GridView
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@drawable/user_select"
         android:id="@+id/userlistView"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
@@ -56,10 +57,11 @@
         android:layout_width="135dp"
         android:layout_height="wrap_content"
         android:text="Create User"
+        android:textColor="#ffffff"
         android:id="@+id/buttonAddUser"
-        android:background="@drawable/grid_cells_border"
+        android:background="@drawable/create_user_button"
         android:layout_marginEnd="16dp"
-        android:layout_alignBottom="@+id/imageView"
+        android:layout_alignBottom="@+id/textView2"
         android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

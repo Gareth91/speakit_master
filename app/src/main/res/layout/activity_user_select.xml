@@ -19,7 +19,7 @@
     <ImageView
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:src="@drawable/seeyou"
+        android:src="@drawable/user_wave"
         android:scaleType="fitXY"
         android:id="@+id/imageView"
         android:layout_marginEnd="88dp"
@@ -32,16 +32,15 @@
         android:layout_height="wrap_content"
         android:text="Select User"
         android:textSize="20sp"
-        android:layout_marginTop="37dp"
+        android:layout_marginTop="38dp"
         android:paddingLeft="3dp"
         android:layout_below="@+id/buttonAddUser"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true" />
 
     <GridView
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginTop="71dp"
-        android:background="@drawable/user_select"
         android:id="@+id/userlistView"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
@@ -58,9 +57,10 @@
         android:layout_width="135dp"
         android:layout_height="wrap_content"
         android:text="Create User"
+        android:textColor="#ffffff"
         android:layout_marginTop="44dp"
         android:id="@+id/buttonAddUser"
-        android:background="@drawable/grid_cells_border"
+        android:background="@drawable/create_user_button"
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true" />
 

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background= "@drawable/grid_cells_border">
+    android:background= "@drawable/add_category_grid_main">
 
     <FrameLayout
         android:layout_width="95dp"

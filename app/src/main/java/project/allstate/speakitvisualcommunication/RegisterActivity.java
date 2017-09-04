@@ -11,14 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import project.allstate.speakitvisualcommunication.R;
+import java.util.HashMap;
 
 import project.allstate.speakitvisualcommunication.volley.ErrorResponse;
 import project.allstate.speakitvisualcommunication.volley.VolleyCallBack;
 import project.allstate.speakitvisualcommunication.volley.VolleyHelp;
 import project.allstate.speakitvisualcommunication.volley.VolleyRequest;
-
-import java.util.HashMap;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -34,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
         //Set back button in the bar at the top of screen
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
         getSupportActionBar().setTitle("Register");
 
         Email = (EditText) findViewById(R.id.editText2);

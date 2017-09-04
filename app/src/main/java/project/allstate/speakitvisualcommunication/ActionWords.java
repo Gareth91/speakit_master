@@ -4,9 +4,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,8 +14,6 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
-
-import project.allstate.speakitvisualcommunication.R;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -61,6 +59,7 @@ public class ActionWords extends AppCompatActivity implements AdapterView.OnItem
         //Set back button in the bar at the top of screen
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
 
         DisplayMetrics display = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(display);
@@ -88,7 +87,7 @@ public class ActionWords extends AppCompatActivity implements AdapterView.OnItem
                 new PecsImages("A", R.drawable.a, 1),
                 new PecsImages("Am", R.drawable.am, 1),
                 new PecsImages("Can", R.drawable.can, 1),
-                new PecsImages("Do", R.drawable.doword, 1),
+                new PecsImages("Do", R.drawable.do_word, 1),
                 new PecsImages("Eat", R.drawable.eat, 1),
                 new PecsImages("Get", R.drawable.get, 1),
                 new PecsImages("Give", R.drawable.give, 1),
@@ -96,7 +95,7 @@ public class ActionWords extends AppCompatActivity implements AdapterView.OnItem
                 new PecsImages("Gone", R.drawable.gone, 1),
                 new PecsImages("Have", R.drawable.have, 1),
                 new PecsImages("He", R.drawable.he, 1),
-                new PecsImages("Help", R.drawable.helpword, 1),
+                new PecsImages("Help", R.drawable.help, 1),
                 new PecsImages("I", R.drawable.i, 1),
                 new PecsImages("Is", R.drawable.is, 1),
                 new PecsImages("It", R.drawable.it, 1),
@@ -106,7 +105,7 @@ public class ActionWords extends AppCompatActivity implements AdapterView.OnItem
                 new PecsImages("My", R.drawable.my, 1),
                 new PecsImages("Need", R.drawable.need, 1),
                 new PecsImages("No", R.drawable.no, 1),
-                new PecsImages("Play", R.drawable.playword, 1),
+                new PecsImages("Play", R.drawable.play, 1),
                 new PecsImages("Put", R.drawable.put, 1),
                 new PecsImages("Say", R.drawable.say, 1),
                 new PecsImages("See", R.drawable.see, 1),
@@ -129,7 +128,7 @@ public class ActionWords extends AppCompatActivity implements AdapterView.OnItem
 
         }
         final GridView gridView = (GridView)findViewById(R.id.gridviewThird);
-        imageAdapter = new ImageAdapter(this, imageWords);
+        imageAdapter = new ImageAdapter(this, imageWords, "Action Words");
         gridView.setAdapter(imageAdapter);
         gridView.setOnItemClickListener(this);
 
@@ -171,7 +170,7 @@ public class ActionWords extends AppCompatActivity implements AdapterView.OnItem
             Drawable drawable = getResources().getDrawable(image.getImage());
             Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] bitMapData = stream.toByteArray();
             image.setImages(bitMapData);
         }

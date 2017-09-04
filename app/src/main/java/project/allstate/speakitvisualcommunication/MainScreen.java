@@ -49,7 +49,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
-import project.allstate.speakitvisualcommunication.R;
 import project.allstate.speakitvisualcommunication.volley.ErrorResponse;
 import project.allstate.speakitvisualcommunication.volley.VolleyCallBack;
 import project.allstate.speakitvisualcommunication.volley.VolleyHelp;
@@ -120,13 +119,14 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
      */
     private PecsImages[] categories = {
 
-            new PecsImages("Add Category", R.drawable.addcategory,1),
-            new PecsImages("At Home", R.drawable.home,1),
+            new PecsImages("Add Category", R.drawable.addcategory_white,1),
+            new PecsImages("At Home", R.drawable.athome,1),
             new PecsImages("Favourites", R.drawable.favourites,1),
             new PecsImages("About Me", R.drawable.aboutme,1),
-            new PecsImages("Greetings", R.drawable.seeyou,1),
+            new PecsImages("Greetings", R.drawable.greetings,1),
             new PecsImages("Food And Drink", R.drawable.foodanddrink,1),
-            new PecsImages("Leisure", R.drawable.leisure,1)
+            new PecsImages("Leisure", R.drawable.leisure,1),
+            new PecsImages("Animals", R.drawable.animals,1)
     };
 
     /**

@@ -33,13 +33,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import project.allstate.speakitvisualcommunication.R;
-
-import project.allstate.speakitvisualcommunication.volley.ErrorResponse;
-import project.allstate.speakitvisualcommunication.volley.VolleyCallBack;
-import project.allstate.speakitvisualcommunication.volley.VolleyHelp;
-import project.allstate.speakitvisualcommunication.volley.VolleyRequest;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,6 +48,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+
+import project.allstate.speakitvisualcommunication.volley.ErrorResponse;
+import project.allstate.speakitvisualcommunication.volley.VolleyCallBack;
+import project.allstate.speakitvisualcommunication.volley.VolleyHelp;
+import project.allstate.speakitvisualcommunication.volley.VolleyRequest;
 
 /**
  * Created by Gareth
@@ -150,6 +148,7 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
         //Set back button in the bar at the top of screen
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
 
 
         //
@@ -167,27 +166,32 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
         //
         imageWords = new ArrayList<>();
         imageWords.clear();
-        PecsImages image = new PecsImages(getString(R.string.Action_Words),R.drawable.actionwords,1);
-        PecsImages addImage = new PecsImages((getString(R.string.Add_Word)), R.drawable.addcategory,1);
-        imageWords.add(image);
-        if (!category.equals("Favourites")) {
-            imageWords.add(addImage);
-        }
 
         //
         switch (category){
             case "Favourites":
+                PecsImages image = new PecsImages(getString(R.string.Action_Words),R.drawable.red_action_word,1);
+                imageWords.add(image);
                 break;
             case "At Home":
+                PecsImages[] atHome = {
+                        new PecsImages("Action Words", R.drawable.yellow_action_word,1),
+                        new PecsImages((getString(R.string.Add_Word)), R.drawable.yellow_plus,1)
+                };
+                for (PecsImages s : atHome) {
+                    imageWords.add(s);
+                }
                 break;
             case "About Me":
                 PecsImages[] AboutMe = {
+                        new PecsImages("Action Words", R.drawable.action_word_green,1),
+                        new PecsImages((getString(R.string.Add_Word)), R.drawable.add_word_green,1),
                         new PecsImages("Angry",R.drawable.angry,1),
                         new PecsImages("Anxious",R.drawable.anxious,1),
                         new PecsImages("Arm",R.drawable.arm,1),
                         new PecsImages("Back",R.drawable.back,1),
                         new PecsImages("Dont touch",R.drawable.donttouch,1),
-                        new PecsImages("ear",R.drawable.ear,1),
+                        new PecsImages("Ear",R.drawable.ear,1),
                         new PecsImages("Excited",R.drawable.excited,1),
                         new PecsImages("Eye",R.drawable.eye,1),
                         new PecsImages("Foot",R.drawable.foot,1),
@@ -196,7 +200,7 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
                         new PecsImages("Hand",R.drawable.hand,1),
                         new PecsImages("Happy",R.drawable.happy,1),
                         new PecsImages("Head",R.drawable.head,1),
-                        new PecsImages("Help",R.drawable.help,1),
+                        new PecsImages("Help",R.drawable.helping,1),
                         new PecsImages("Leg",R.drawable.leg,1),
                         new PecsImages("Love You",R.drawable.loveyou,1),
                         new PecsImages("Mouth",R.drawable.mouth,1),
@@ -215,12 +219,33 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
                 break;
             case "Food And Drink":
                 PecsImages[] FoodAndDrink = {
-                        new PecsImages("Breakfast",R.drawable.breakfast,1),
+                        new PecsImages("Action Words", R.drawable.orange_action_word,1),
+                        new PecsImages((getString(R.string.Add_Word)), R.drawable.orange_plus,1),
+                        new PecsImages("Cereal",R.drawable.cereal,1),
                         new PecsImages("Lunch",R.drawable.lunch,1),
                         new PecsImages("Dinner",R.drawable.dinner,1),
                         new PecsImages("Snacks",R.drawable.snacks,1),
                         new PecsImages("Drinks",R.drawable.drinks,1),
-
+                        new PecsImages("Apple",R.drawable.apple,1),
+                        new PecsImages("Banana",R.drawable.banana,1),
+                        new PecsImages("Burger",R.drawable.burger,1),
+                        new PecsImages("Cheese",R.drawable.cheese,1),
+                        new PecsImages("Chicken",R.drawable.chicken,1),
+                        new PecsImages("Chips",R.drawable.chips,1),
+                        new PecsImages("Chocolate",R.drawable.chocolate,1),
+                        new PecsImages("Crisps",R.drawable.crips,1),
+                        new PecsImages("Hot Chocolate",R.drawable.hot_chocolate,1),
+                        new PecsImages("Ice Cream",R.drawable.ice_cream,1),
+                        new PecsImages("Milk",R.drawable.milk,1),
+                        new PecsImages("Milkshake",R.drawable.milkshake,1),
+                        new PecsImages("Orange Juice",R.drawable.orange_juice,1),
+                        new PecsImages("Orange",R.drawable.orange,1),
+                        new PecsImages("Popcorn",R.drawable.pop_corn,1),
+                        new PecsImages("Salt and Pepper",R.drawable.salt_and_peper,1),
+                        new PecsImages("Sandwich",R.drawable.sandwhich,1),
+                        new PecsImages("Strawberry",R.drawable.strawberry,1),
+                        new PecsImages("Tea",R.drawable.tea,1),
+                        new PecsImages("Water",R.drawable.water,1)
                 };
                 for (PecsImages s : FoodAndDrink) {
                     imageWords.add(s);
@@ -228,15 +253,17 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
                 break;
             case "Greetings":
                 PecsImages[] Greetings = {
-                        new PecsImages("Hello",R.drawable.hello,1),
-                        new PecsImages("Good Morning",R.drawable.morning,1),
-                        new PecsImages("Good Night",R.drawable.night,1),
-                        new PecsImages("What's Your Name?",R.drawable.question,1),
-                        new PecsImages("See You Later",R.drawable.goodbye,1),
-                        new PecsImages("How Are You?",R.drawable.question,1),
-                        new PecsImages("Would You Like To Join?",R.drawable.question,1),
-                        new PecsImages("My Name Is",R.drawable.goodbye,1),
-                        new PecsImages("Nice To Meet You",R.drawable.goodbye,1),
+                        new PecsImages("Action Words", R.drawable.grey_action_word,1),
+                        new PecsImages((getString(R.string.Add_Word)), R.drawable.grey_plus,1),
+                        new PecsImages("hello",R.drawable.hello,1),
+                        new PecsImages("Good Morning",R.drawable.good_morning,1),
+                        new PecsImages("Good Night",R.drawable.good_night,1),
+                        new PecsImages("What's Your Name?",R.drawable.whats_your_name,1),
+                        new PecsImages("See You Later",R.drawable.see_you_later,1),
+                        new PecsImages("How Are You?",R.drawable.how_are_you,1),
+                        new PecsImages("Would You Like To Join?",R.drawable.would_u_like_to_join,1),
+                        new PecsImages("My Name Is",R.drawable.my_name_is,1),
+                        new PecsImages("Nice To Meet You",R.drawable.nice_to_meet_you,1)
                 };
                 for (PecsImages s : Greetings) {
                     imageWords.add(s);
@@ -244,29 +271,63 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
                 break;
             case "Leisure":
                 PecsImages[] Leisure = {
-                        new PecsImages("Walk",R.drawable.walk,1),
+                        new PecsImages("Action Words", R.drawable.pink_action_word,1),
+                        new PecsImages((getString(R.string.Add_Word)), R.drawable.pink_plus,1),
+                        new PecsImages("Walk",R.drawable.walking,1),
                         new PecsImages("Basketball",R.drawable.basketball,1),
                         new PecsImages("Swing",R.drawable.swing,1),
                         new PecsImages("Playstation",R.drawable.playstation,1),
                         new PecsImages("TV",R.drawable.tv,1),
-                        new PecsImages("Computer",R.drawable.computer,1),
+                        new PecsImages("Computer",R.drawable.compute,1),
                         new PecsImages("Football",R.drawable.football,1),
                         new PecsImages("Cinema",R.drawable.cinema,1),
-                        new PecsImages("Cycling",R.drawable.cycle,1),
+                        new PecsImages("Cycling",R.drawable.cycling,1),
+                        new PecsImages("Hula Hoop",R.drawable.hula_hoop,1),
+                        new PecsImages("Skipping Rope",R.drawable.skipping_rope,1),
+                        new PecsImages("Swimming",R.drawable.swimming,1),
+                        new PecsImages("Tennis",R.drawable.tennis,1)
                 };
                 for (PecsImages s : Leisure) {
                     imageWords.add(s);
                 }
                 break;
-            case "Today's Activities":
+            case "Animals":
+                PecsImages[] animals = {
+                        new PecsImages("Action Words", R.drawable.green_action_word, 1),
+                        new PecsImages((getString(R.string.Add_Word)), R.drawable.green_plus,1),
+                        new PecsImages("Bear", R.drawable.bear, 1),
+                        new PecsImages("Cat", R.drawable.cat, 1),
+                        new PecsImages("Chicken", R.drawable.chick, 1),
+                        new PecsImages("Cow", R.drawable.cow, 1),
+                        new PecsImages("Dog", R.drawable.dog, 1),
+                        new PecsImages("Duck", R.drawable.duck, 1),
+                        new PecsImages("Elephant", R.drawable.elephant, 1),
+                        new PecsImages("Frog", R.drawable.frog, 1),
+                        new PecsImages("Hippo", R.drawable.hippo, 1),
+                        new PecsImages("Horse", R.drawable.horse, 1),
+                        new PecsImages("Lion", R.drawable.lion, 1),
+                        new PecsImages("Monkey", R.drawable.monkey, 1),
+                        new PecsImages("Owl", R.drawable.owl, 1),
+                        new PecsImages("Penguin", R.drawable.penguin, 1),
+                        new PecsImages("Pig", R.drawable.pig, 1),
+                        new PecsImages("Rabbit", R.drawable.rabbit, 1),
+                        new PecsImages("Tiger", R.drawable.tiger, 1)
+                };
+                for (PecsImages s : animals) {
+                    imageWords.add(s);
+                }
                 break;
             default:
+                PecsImages action = new PecsImages("Action Words", R.drawable.action_word_green,1);
+                imageWords.add(action);
+                PecsImages add = new PecsImages((getString(R.string.Add_Word)), R.drawable.add_word_green,1);
+                imageWords.add(add);
                 break;
 
         }
         //
         final GridView gridView = (GridView)findViewById(R.id.gridviewSecond);
-        imageAdapter = new ImageAdapter(this, imageWords);
+        imageAdapter = new ImageAdapter(this, imageWords, category);
         gridView.setAdapter(imageAdapter);
         gridView.setOnItemClickListener(this);
 
@@ -434,7 +495,7 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
                         Drawable drawable = getResources().getDrawable(image.getImage());
                         Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                         byte[] bitMapData = stream.toByteArray();
                         image.setImages(bitMapData);
                     }

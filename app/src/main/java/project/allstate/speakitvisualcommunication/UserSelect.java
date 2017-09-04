@@ -29,13 +29,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import project.allstate.speakitvisualcommunication.R;
-
-import project.allstate.speakitvisualcommunication.volley.ErrorResponse;
-import project.allstate.speakitvisualcommunication.volley.VolleyCallBack;
-import project.allstate.speakitvisualcommunication.volley.VolleyHelp;
-import project.allstate.speakitvisualcommunication.volley.VolleyRequest;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,6 +43,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+
+import project.allstate.speakitvisualcommunication.volley.ErrorResponse;
+import project.allstate.speakitvisualcommunication.volley.VolleyCallBack;
+import project.allstate.speakitvisualcommunication.volley.VolleyHelp;
+import project.allstate.speakitvisualcommunication.volley.VolleyRequest;
 
 import static android.R.attr.id;
 
@@ -120,6 +118,7 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
         //Set back button in the bar at the top of screen
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
 
         add = (Button) findViewById(R.id.buttonAddUser);
         add.setOnClickListener(this);

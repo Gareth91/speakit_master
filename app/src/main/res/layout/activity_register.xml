@@ -73,6 +73,6 @@
         android:layout_below="@+id/editText4"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
-        android:hint="Register" />
+        android:text="REGISTER" />
 
 </RelativeLayout>

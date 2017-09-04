@@ -107,7 +107,7 @@ public class CreateUser extends AppCompatActivity {
         //Set back button in the bar at the top of screen
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
 
         ops = new DatabaseOperations(getApplicationContext());
         ops.open();

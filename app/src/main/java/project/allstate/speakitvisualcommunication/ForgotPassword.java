@@ -9,17 +9,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import project.allstate.speakitvisualcommunication.R;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 import project.allstate.speakitvisualcommunication.volley.ErrorResponse;
 import project.allstate.speakitvisualcommunication.volley.VolleyCallBack;
 import project.allstate.speakitvisualcommunication.volley.VolleyHelp;
 import project.allstate.speakitvisualcommunication.volley.VolleyRequest;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
 
 public class ForgotPassword extends AppCompatActivity {
 
@@ -35,6 +33,7 @@ public class ForgotPassword extends AppCompatActivity {
         //Set back button in the bar at the top of screen
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
         getSupportActionBar().setTitle("Forgot Password");
 
         userEmail = (EditText) findViewById(R.id.editText8);

@@ -11,8 +11,7 @@
       android:layout_width="180dp"
       android:layout_height="50dp"
       android:id="@+id/imageView2"
-      android:src="@drawable/logotransparent"
-      android:background="@color/colorPrimary"
+      android:src="@drawable/logo_green"
       android:layout_alignParentTop="true"
       android:layout_centerHorizontal="true"
       android:layout_marginTop="29dp" />

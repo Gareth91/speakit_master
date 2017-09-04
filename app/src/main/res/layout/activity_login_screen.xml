@@ -9,11 +9,10 @@
     tools:context="project.allstate.speakitvisualcommunication.LoginScreen">
 
   <ImageView
-      android:layout_width="150dp"
-      android:layout_height="50dp"
+      android:layout_width="210dp"
+      android:layout_height="90dp"
       android:id="@+id/imageView2"
-      android:src="@drawable/logotransparent"
-      android:background="@color/colorPrimary"
+      android:src="@drawable/logo_green"
       android:layout_marginTop="47dp"
       android:layout_alignParentTop="true"
       android:layout_centerHorizontal="true" />
@@ -37,7 +36,7 @@
         android:layout_height="wrap_content"
         android:text="LOGIN"
         android:textSize="20sp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="27dp"
         android:layout_below="@+id/forgotbutton"
         android:layout_alignStart="@+id/button4"
         android:layout_alignEnd="@+id/button4" />

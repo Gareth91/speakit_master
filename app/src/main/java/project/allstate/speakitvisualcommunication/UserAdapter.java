@@ -10,8 +10,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import project.allstate.speakitvisualcommunication.R;
-
 import java.util.List;
 
 /**
@@ -83,7 +81,7 @@ public class UserAdapter extends BaseAdapter {
         // view holder pattern
         if (convertView == null) {
             final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-                convertView = layoutInflater.inflate(R.layout.linear_layout_user, null);
+                convertView = layoutInflater.inflate(R.layout.user_select, null);
                 imageView = (ImageView) convertView.findViewById(R.id.userImage);
                 wordView = (TextView) convertView.findViewById(R.id.user);
 

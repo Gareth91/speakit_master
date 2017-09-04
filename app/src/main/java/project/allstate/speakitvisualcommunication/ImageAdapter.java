@@ -3,14 +3,13 @@ package project.allstate.speakitvisualcommunication;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import project.allstate.speakitvisualcommunication.R;
 
 import java.util.List;
 
@@ -31,11 +30,26 @@ public class ImageAdapter extends BaseAdapter {
     private final List<PecsImages> images;
 
     /**
+     *
+     */
+    private String category;
+
+    /**
      * This constructor is used to instantiate a ImageAdapter.
      */
     public ImageAdapter(Context context, List<PecsImages> images) {
         this.mContext = context;
         this.images = images;
+    }
+
+    /**
+     * This constructor is used to instantiate a ImageAdapter.
+     */
+    public ImageAdapter(Context context, List<PecsImages> images, String category) {
+        this.mContext = context;
+        this.images = images;
+        this.category = category;
+
     }
 
     /**
@@ -76,28 +90,99 @@ public class ImageAdapter extends BaseAdapter {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final PecsImages image = images.get(position);
-        final ImageView imageView;
-        final TextView wordView;
-
+        PecsImages image = images.get(position);
+        ImageView imageView;
+        TextView wordView;
+        String word  = image.getWord();
+        ViewHolder viewHolder = null;
         // view holder pattern
+        convertView = null;
+
         if (convertView == null) {
-            final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+
+            LayoutInflater layoutInflater = LayoutInflater.from(mContext);
             if(mContext.getClass().equals(MainScreen.class)) {
-                convertView = layoutInflater.inflate(R.layout.activity_linear_layout_image, null);
+                switch (word) {
+                    case "Add Category":
+                        convertView = layoutInflater.inflate(R.layout.add_category_layout, null);
+                        break;
+                    case "At Home":
+                        convertView = layoutInflater.inflate(R.layout.at_home_layout, null);
+                        break;
+                    case "Favourites":
+                        convertView = layoutInflater.inflate(R.layout.favourites_layout, null);
+                        break;
+                    case "About Me":
+                        convertView = layoutInflater.inflate(R.layout.about_me_layout, null);
+                        break;
+                    case "Greetings":
+                        convertView = layoutInflater.inflate(R.layout.greetings_layout, null);
+                        break;
+                    case "Food And Drink":
+                        convertView = layoutInflater.inflate(R.layout.food_drink_layout, null);
+                        break;
+                    case "Leisure":
+                         convertView = layoutInflater.inflate(R.layout.leisure_layout, null);
+                        break;
+                    case "Animals":
+                        convertView = layoutInflater.inflate(R.layout.animals_layout, null);
+                        break;
+                    default:
+                        convertView = layoutInflater.inflate(R.layout.personal_layout, null);
+                        break;
+                }
                 imageView = (ImageView) convertView.findViewById(R.id.imageview);
                 wordView = (TextView) convertView.findViewById(R.id.wordText);
             } else {
-                convertView = layoutInflater.inflate(R.layout.activity_linear_layout_image2, null);
+                switch (category) {
+                    case "At Home":
+                        convertView = layoutInflater.inflate(R.layout.at_home_second, null);
+                        break;
+                    case "Action Words":
+                    case "Favourites":
+                        convertView = layoutInflater.inflate(R.layout.favourites_second, null);
+                        break;
+                    case "About Me":
+                        convertView = layoutInflater.inflate(R.layout.about_me_second, null);
+                        break;
+                    case "Greetings":
+                        convertView = layoutInflater.inflate(R.layout.greeting_second, null);
+                        break;
+                    case "Food And Drink":
+                        convertView = layoutInflater.inflate(R.layout.food_and_drink_second, null);
+                        break;
+                    case "Leisure":
+                        convertView = layoutInflater.inflate(R.layout.leisure_second, null);
+                        break;
+                    case "Animals":
+                        convertView = layoutInflater.inflate(R.layout.animals_second, null);
+                        break;
+                    default:
+                        convertView = layoutInflater.inflate(R.layout.personal_second, null);
+                        break;
+                }
                 imageView = (ImageView) convertView.findViewById(R.id.imageview2);
                 wordView = (TextView) convertView.findViewById(R.id.wordText2);
             }
-            final ViewHolder viewHolder = new ViewHolder(imageView, wordView);
+            viewHolder = new ViewHolder(imageView, wordView);
             convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder)convertView.getTag();
         }
 
-        final ViewHolder viewHolder = (ViewHolder)convertView.getTag();
+
         viewHolder.textView.setText(image.getWord());
+        if (image.getWord().length() > 10 && image.getWord().length() <= 13 && mContext.getClass().equals(SecondScreen.class) ) {
+            viewHolder.textView.setTextSize(15);
+        } else if (image.getWord().length() > 13 && mContext.getClass().equals(SecondScreen.class)) {
+            viewHolder.textView.setTextSize(13);
+        } else if (image.getWord().length() > 22 && mContext.getClass().equals(MainScreen.class)) {
+            viewHolder.textView.setTextSize(25);
+        }
+
+        Typeface tf = Typeface.createFromAsset(mContext.getAssets(), "fonts/asparagus_sprouts.ttf");
+        viewHolder.textView.setTypeface(tf);
+
         if (image.getNumber() == 1) {
             viewHolder.imageView.setImageResource(image.getImage());
         } else {
@@ -114,8 +199,8 @@ public class ImageAdapter extends BaseAdapter {
      */
     private class ViewHolder {
 
-        private final ImageView imageView;
-        private final TextView textView;
+        private ImageView imageView;
+        private TextView textView;
 
         public ViewHolder(ImageView imageView, TextView textView) {
             this.imageView = imageView;

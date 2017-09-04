@@ -43,6 +43,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         //Set back button in the bar at the top of screen
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
         getSupportActionBar().setTitle("Login");
 
 
