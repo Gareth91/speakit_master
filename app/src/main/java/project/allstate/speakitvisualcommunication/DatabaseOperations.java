@@ -271,7 +271,6 @@ public class DatabaseOperations {
 
         ContentValues values = new ContentValues();
 
-        //Add the booking date, company name, category and customer id to booking table
         values.put(SQLiteHelper.word, word);
         values.put(SQLiteHelper.image, images);
         values.put(SQLiteHelper.number,2);

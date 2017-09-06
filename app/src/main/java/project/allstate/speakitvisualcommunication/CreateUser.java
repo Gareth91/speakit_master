@@ -186,7 +186,7 @@ public class CreateUser extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(String result){
                                         System.out.print("CALLBACK SUCCESS: " + result);
-                                        Toast.makeText(CreateUser.this, "Success ", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(CreateUser.this, "Success ", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(CreateUser.this, UserSelect.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                         intent.putExtra("project.allstate.speakitvisualcommunication.Login", login);

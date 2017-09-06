@@ -363,8 +363,7 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
                                 String username = jsonobject.getString("username");
                                 byte [] images= Base64.decode(jsonobject.getString("image"),Base64.DEFAULT);
                                 PecsImages pecsImages = new PecsImages(word, images, id, username);
-                                list.add(pecsImages);
-                                imageWords.addAll(list);
+                                imageWords.add(pecsImages);
                             }
                             imageAdapter.notifyDataSetChanged();
                         }catch (JSONException e) {
@@ -380,7 +379,7 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
             } else {
                 //list = ops.getData(category, user);
                 //String BASE_URL = "http://awsandroid.eu-west-1.elasticbeanstalk.com/project/insertImage";
-//                String BASE_URL = "http://10.0.2.2:5000/project/return";
+                //String BASE_URL = "http://10.0.2.2:5000/project/return";
                 String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/return";
                 String url = BASE_URL;
 
@@ -389,8 +388,6 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
 
                 body.put("category", category);
                 body.put("username", user);
-//                body.put("category", "HELP");
-//                body.put("username", "Ashley");
 
                 String contentType =  "application/json";
                 VolleyRequest request =   new VolleyRequest(SecondScreen.this, VolleyHelp.methodDescription.POST, contentType, url, headers, body);
@@ -876,7 +873,7 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
                                                 PecsImages pecsImages = new PecsImages(word, images, id, category, username, number);
                                                 imageWords.add(pecsImages);
                                                 imageAdapter.notifyDataSetChanged();
-                                                Toast.makeText(SecondScreen.this, "Update Success ", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(SecondScreen.this, "Update Success ", Toast.LENGTH_SHORT).show();
                                             }catch (JSONException e) {
                                                 e.printStackTrace();
                                             }
@@ -942,7 +939,7 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
                         @Override
                         public void onSuccess(String result){
                             System.out.print("CALLBACK SUCCESS: " + result);
-                            Toast.makeText(SecondScreen.this, "Success ", Toast.LENGTH_LONG).show();
+                            Toast.makeText(SecondScreen.this, "Success ", Toast.LENGTH_SHORT).show();
                             Iterator<PecsImages> iterator = imageWords.iterator();
                             while (iterator.hasNext()) {
                                 if(iterator.next().getId() == idPecs) {
@@ -978,7 +975,7 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
      */
     public void addToFavourites(Bitmap image, String word) {
         //String BASE_URL = "http://awsandroid.eu-west-1.elasticbeanstalk.com/project/addFavourite";
-//        String BASE_URL = "http://10.0.2.2:5000/project/addFavourite";
+        //String BASE_URL = "http://10.0.2.2:5000/project/addFavourite";
         String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/addFavourite";
         String url = BASE_URL;
 
@@ -997,7 +994,7 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onSuccess(String result){
                 System.out.print("CALLBACK SUCCESS: " + result);
-                Toast.makeText(SecondScreen.this, "Added Successfully ", Toast.LENGTH_LONG).show();
+                Toast.makeText(SecondScreen.this, "Added Successfully ", Toast.LENGTH_SHORT).show();
             }
 
             @Override

@@ -20,7 +20,7 @@ public class PecsImagesTest {
         category = "At Home";
         username = "Gareth";
         id = 1;
-        image = R.drawable.home;
+        image = R.drawable.help;
         numberOne = 1;
         numberTwo = 2;
     }

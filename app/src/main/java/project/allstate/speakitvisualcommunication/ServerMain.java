@@ -5,11 +5,6 @@ import android.graphics.Bitmap;
 import android.util.Base64;
 import android.widget.Toast;
 
-import project.allstate.speakitvisualcommunication.volley.ErrorResponse;
-import project.allstate.speakitvisualcommunication.volley.VolleyCallBack;
-import project.allstate.speakitvisualcommunication.volley.VolleyHelp;
-import project.allstate.speakitvisualcommunication.volley.VolleyRequest;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,6 +13,11 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import project.allstate.speakitvisualcommunication.volley.ErrorResponse;
+import project.allstate.speakitvisualcommunication.volley.VolleyCallBack;
+import project.allstate.speakitvisualcommunication.volley.VolleyHelp;
+import project.allstate.speakitvisualcommunication.volley.VolleyRequest;
 
 /**
  * Created on 15/08/2017.
@@ -54,7 +54,7 @@ public class ServerMain {
             @Override
             public void onSuccess(String result){
                 System.out.print("CALLBACK SUCCESS: " + result);
-                Toast.makeText(context, "Success ", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Success ", Toast.LENGTH_SHORT).show();
             }
 
             @Override

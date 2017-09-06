@@ -214,9 +214,9 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
 //        }
         User user = userList.get(position);
         Intent intent = new Intent(this, MainScreen.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("project.allstate.speakitvisualcommunication.username", user.getUserName());
         intent.putExtra("project.allstate.speakitvisualcommunication.Login", logName);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
@@ -683,6 +683,7 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
                 Intent intent = new Intent(UserSelect.this, MainScreen.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 return true;
             case R.id.action_logout:

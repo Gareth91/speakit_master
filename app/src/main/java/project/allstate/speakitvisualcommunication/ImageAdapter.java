@@ -172,10 +172,10 @@ public class ImageAdapter extends BaseAdapter {
 
 
         viewHolder.textView.setText(image.getWord());
-        if (image.getWord().length() > 10 && image.getWord().length() <= 13 && mContext.getClass().equals(SecondScreen.class) ) {
-            viewHolder.textView.setTextSize(15);
+        if (image.getWord().length() >= 12 && image.getWord().length() <= 13 && mContext.getClass().equals(SecondScreen.class) ) {
+            viewHolder.textView.setTextSize(16);
         } else if (image.getWord().length() > 13 && mContext.getClass().equals(SecondScreen.class)) {
-            viewHolder.textView.setTextSize(13);
+            viewHolder.textView.setTextSize(14);
         } else if (image.getWord().length() > 22 && mContext.getClass().equals(MainScreen.class)) {
             viewHolder.textView.setTextSize(25);
         }

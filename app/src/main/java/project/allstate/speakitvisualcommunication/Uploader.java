@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,6 +31,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+
+import project.allstate.speakitvisualcommunication.volley.ErrorResponse;
+import project.allstate.speakitvisualcommunication.volley.VolleyCallBack;
+import project.allstate.speakitvisualcommunication.volley.VolleyHelp;
+import project.allstate.speakitvisualcommunication.volley.VolleyRequest;
 
 /**
  * Created by Gareth
@@ -94,10 +101,6 @@ public class Uploader extends AppCompatActivity {
      */
     private ProgressBar spinner;
 
-    /**
-     *
-     */
-    ServerMain serverMain = new ServerMain();
 
     //private static final int ACTION_TAKE_PHOTO_B = 1;
 
@@ -135,25 +138,8 @@ public class Uploader extends AppCompatActivity {
         ops = new DatabaseOperations(getApplicationContext());
         ops.open();
 
-        //final List<String> spinnerList = new ArrayList<>(Arrays.asList(categoryArray));
-        //spinner = (Spinner) findViewById(R.id.categorySelection);
-        //ArrayAdapter<String> adapter = new ArrayAdapter<>(Uploader.this, android.R.layout.simple_spinner_item, spinnerList);
-        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //spinner.setAdapter(adapter);
-        //spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            //@Override
-           // public void onItemSelected(AdapterView<?> parent, final View view, int position, long id) {
-                //Get the selected booking from the spinner
-                //categorySelected = spinner.getSelectedItem().toString();
-           //}
-
-           // @Override
-            //public void onNothingSelected(AdapterView<?> adapterView) {
-                //categorySelected = categoryArray[0];
-            //}
-       // });
-
         init();
+
         btnAdd.setEnabled(true);
         btnChoose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,38 +162,63 @@ public class Uploader extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     try{
-//
-//                        );
                         btnAdd.setEnabled(false);
                         spinner.setVisibility(View.VISIBLE);
-                        serverMain.addImageWord(Uploader.this,edtName.getText().toString(), categorySelected, user, "2",((BitmapDrawable)imageView.getDrawable()).getBitmap());
-                        //Toast.makeText(getApplicationContext(), "Added successfully!", Toast.LENGTH_SHORT).show();
-                        Thread.sleep(900);
-                        if (!categorySelected.equals("Home Page")) {
-                            Intent intent = new Intent(Uploader.this, SecondScreen.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            intent.putExtra("project.allstate.speakitvisualcommunication.username2", user);
-                            intent.putExtra("project.allstate.speakitvisualcommunication.Category", categorySelected);
-                            intent.putExtra("project.allstate.speakitvisualcommunication.Login",logName);
-                            spinner.setVisibility(View.GONE);
-                            startActivity(intent);
-                        } else if (categorySelected.equals("Home Page")){
-                            Intent intent = new Intent(Uploader.this, MainScreen.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            intent.putExtra("project.allstate.speakitvisualcommunication.username2", user);
-                            intent.putExtra("project.allstate.speakitvisualcommunication.Category", categorySelected);
-                            intent.putExtra("project.allstate.speakitvisualcommunication.Login",logName);
-                            spinner.setVisibility(View.GONE);
-                            startActivity(intent);
-                        }
 
+                        //String BASE_URL = "http://10.0.2.2:5000/project/insertImage";
+                        String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/insertImage";
+                        String url = BASE_URL;
+
+                        HashMap<String, String> headers  = new HashMap<>();
+                        HashMap<String, String> body  = new HashMap<>();
+
+                        body.put("id", null);
+                        body.put("word", edtName.getText().toString());
+                        body.put("category", categorySelected);
+                        body.put("username", user);
+                        body.put("number", "2");
+                        body.put("images", BitMapToString(((BitmapDrawable)imageView.getDrawable()).getBitmap()));
+
+                        String contentType =  "application/json";
+                        VolleyRequest request =   new VolleyRequest(Uploader.this, VolleyHelp.methodDescription.POST, contentType, url, headers, body);
+
+                        request.serviceJsonCall(new VolleyCallBack(){
+                            @Override
+                            public void onSuccess(String result){
+                                System.out.print("CALLBACK SUCCESS: " + result);
+                                Toast.makeText(Uploader.this, "Success ", Toast.LENGTH_SHORT).show();
+
+                                if (!categorySelected.equals("Home Page")) {
+                                    Intent intent = new Intent(Uploader.this, SecondScreen.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    intent.putExtra("project.allstate.speakitvisualcommunication.username2", user);
+                                    intent.putExtra("project.allstate.speakitvisualcommunication.Category", categorySelected);
+                                    intent.putExtra("project.allstate.speakitvisualcommunication.Login",logName);
+                                    spinner.setVisibility(View.GONE);
+                                    startActivity(intent);
+                                } else if (categorySelected.equals("Home Page")){
+                                    Intent intent = new Intent(Uploader.this, MainScreen.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    intent.putExtra("project.allstate.speakitvisualcommunication.username2", user);
+                                    intent.putExtra("project.allstate.speakitvisualcommunication.Category", categorySelected);
+                                    intent.putExtra("project.allstate.speakitvisualcommunication.Login",logName);
+                                    spinner.setVisibility(View.GONE);
+                                    startActivity(intent);
+                                }
+                            }
+                            @Override
+                            public void onError(ErrorResponse errorResponse){
+                                System.out.print("CALLBACK ERROR: " + errorResponse.getMessage());
+                                btnAdd.setEnabled(true);
+                                spinner.setVisibility(View.GONE);
+                            }
+                        });
                     }
                     catch (Exception e){
                         e.printStackTrace();
                     }
                 }
         });
-
 
     }
 
@@ -416,6 +427,22 @@ public class Uploader extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+    /**
+     *
+     * @param bitmap
+     * @return
+     */
+    public String BitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp= Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
+    }
+
+
 
     //private void dispatchTakePictureIntent(int actionCode) {
 
