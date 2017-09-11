@@ -23,18 +23,24 @@ import project.allstate.speakitvisualcommunication.volley.VolleyRequest;
 
 
 /**
- * Created by Connaire on 05/08/2017.
+ * Created by Connaire Reid on 05/08/2017.
  * Modified by Gareth, Anthony and Ashley on 22/08/2017
  */
 
 public class LoginScreen extends AppCompatActivity implements View.OnClickListener {
 
+    /**
+     * Declaration of items within the activity
+     */
     EditText Username, Password;
     Button Login;
     Button Forgot;
     Button Register;
 
-
+    /**
+     * onCreate method called when screen is first created
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
@@ -59,20 +65,30 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
     }
 
+
+    /**
+     * Method to set the onclick for each button within the activity
+     * @param v
+     */
     @Override
     public void onClick(View v) {
 
         switch (v.getId()) {
             case R.id.button3:
+                //Validation that a username is entered
                 if (Username.getText().toString().equals("")) {
                     Username.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+                    // Validation that a password is entered
                 } else if (Password.getText().toString().equals("")) {
                     Password.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
                 } else {
                     Username.getBackground().clearColorFilter();
                     Password.getBackground().clearColorFilter();
                 }
-                //String BASE_URL = "http://awsandroid.eu-west-1.elasticbeanstalk.com/project/getAccountDetails";
+                /**
+                 * Volley request to get the account details
+                 * Created by Gareth Moore
+                 */
                 //String BASE_URL = "http://10.0.2.2:5000/project/getAccountDetails";
                 String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/getAccountDetails";
                 String url = BASE_URL;
@@ -80,10 +96,11 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                 HashMap<String, String> headers = new HashMap<>();
                 HashMap<String, String> body = new HashMap<>();
 
+                //username and password added to the body
                 body.put("username", Username.getText().toString());
                 body.put("password", Password.getText().toString());
 
-
+                //VolleyRequest to determine if the username and password exist within the database
                 String contentType = "application/json";
                 VolleyRequest request = new VolleyRequest(LoginScreen.this, VolleyHelp.methodDescription.POST, contentType, url, headers, body);
 
@@ -94,6 +111,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                         if (result.length() > 0) {
                             JSONObject jsonObject = null;
                             try {
+                                // Comparison of Object returned from database to the username and password entered
+                                // to assert if the user exists or not
                                 jsonObject = new JSONObject(result);
                                 String dbUsername = jsonObject.getString("username");
                                 String dbPassword = jsonObject.getString("password");
@@ -136,7 +155,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    
+
     /**
      * Method for the selection of the home button
      * @param item

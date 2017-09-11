@@ -57,7 +57,7 @@ import project.allstate.speakitvisualcommunication.volley.VolleyRequest;
 import static project.allstate.speakitvisualcommunication.SQLiteHelper.category;
 
 /**
- * Created by Gareth Moore
+ * Authored by Anthony McDonald and Gareth Moore
  * Class used to create the main screen of the app
  */
 public class MainScreen extends AppCompatActivity implements AdapterView.OnItemClickListener, TextToSpeech.OnInitListener, View.OnClickListener, View.OnLongClickListener{
@@ -338,7 +338,7 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
                         @Override
                         public void onClick(DialogInterface dialog, int item) {
                             if (item == 0) {
-                                 //show dialog update at here
+                                //show dialog update at here
                                 showDialogUpdate(MainScreen.this, image.getId());
                             } else {
                                 showDialogDelete(image.getId());
@@ -433,13 +433,13 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
                 }
                 break;
             //case R.id.speakB:
-                //The words from the different items in the view are added together and then spoken aloud
-                //StringBuilder finalStringb =new StringBuilder();
-                //for (PecsImages item : sentenceWords) {
-                    //finalStringb.append(item.getWord()).append(" ");
-                //}
-                //speakWords(finalStringb.toString());
-                //break;
+            //The words from the different items in the view are added together and then spoken aloud
+            //StringBuilder finalStringb =new StringBuilder();
+            //for (PecsImages item : sentenceWords) {
+            //finalStringb.append(item.getWord()).append(" ");
+            //}
+            //speakWords(finalStringb.toString());
+            //break;
             default:
                 break;
         }
@@ -482,7 +482,7 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
 
     /**
 
-    /**
+     /**
      *Method sets up the text to speech language
      * @param initStatus
      * Created by Gareth Moore
@@ -505,12 +505,13 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
      * Method called when update is selected when user has clicked and held on an item within GridView.
      * This method will update a PecsImages object from the list. It will also then update
      * the database.
-     * Created by Gareth Moore
+     * Authored by Gareth Moore and Anthony McDonald
      * @param activity
      * @param id
      */
     private void showDialogUpdate(Activity activity, final int id) {
 
+        // Launching the update activity
         final Dialog dialog = new Dialog(activity);
         dialog.setContentView(R.layout.update_pecs_images);
         dialog.setTitle("Update");
@@ -699,12 +700,14 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
 
     /**
      * Method deletes an image from the list used to populate the GridView
-     * Created by Gareth Moore
+     * Authored by Gareth Moore and Anthony McDonald
      * @param idPecs
      */
     private void showDialogDelete(final int idPecs) {
+        // Launching the delete activity
         final AlertDialog.Builder dialogDelete = new AlertDialog.Builder(MainScreen.this);
 
+        // Code to prompt the user that content will be fully deleted
         dialogDelete.setTitle("Warning!!");
         dialogDelete.setMessage("Are you sure you want to this delete?");
         dialogDelete.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -767,20 +770,25 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
 
 
     /**
-     *Permission to use image
+     * Method used to check that permissions have been allowed by the User
+     * This references the Utility classes permission method
+     * Authored by Anthony McDonald
      * @param requestCode
      * @param permissions
      * @param grantResults
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
+        // Manages which type of request the user made
         switch (requestCode) {
+            // Approves or denies the permissions upon the user's request
             case Utility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // If permissions are accepted and take photo is selected, then camera intent will launch
                     if(userChosen.equals("Take Photo"))
                         cameraIntent();
                     else if(userChosen.equals("Choose from Library"))
+                        // If permissions are accepted and gallery is selected, then gallery intent will launch
                         galleryIntent();
                 } else {
                     //code for deny
@@ -791,15 +799,26 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
     }
 
     /**
-     *
+     * This is a dialogue pop-up component to allow the user to select various options
+     * Authored by Anthony McDonald
      */
     private void selectImage() {
+        // This will display and list three categories available for the user to select
         final CharSequence[] items = { "Take Photo", "Choose from Library",
                 "Cancel" };
 
+        // This displays the pop-up based on the items defined in the previous statement
         AlertDialog.Builder builder = new AlertDialog.Builder(MainScreen.this);
         builder.setTitle("Add Photo");
         builder.setItems(items, new DialogInterface.OnClickListener() {
+            /**
+             * Once the dialogue options have been selected.
+             * This code will produce different intent results based on that chosen
+             * selection.
+             * Authored by Anthony McDonald
+             * @param dialog
+             * @param item
+             */
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 boolean result=Utility.checkPermission(MainScreen.this);
@@ -823,7 +842,10 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
     }
 
     /**
-     *
+     * This is a method that is used to launch the gallery intent.
+     * It will launche the intent once permissions have been allowed and
+     * if a user has chosen the gallery option.
+     * Authored by Anthony McDonald
      */
     private void galleryIntent()
     {
@@ -834,7 +856,10 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
     }
 
     /**
-     *
+     * This is a method that is used to launch the camera intent.
+     * It will launche the intent once permissions have been allowed and
+     * if a user has chosen the camera option
+     * Authored by Anthony McDonald
      */
     private void cameraIntent()
     {
@@ -846,14 +871,15 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
     }
 
     /**
-     * Method checks the data is available to use text to speech
-     * Created by Gareth Moore
-     * Also checks the data for the camera and gallery
+     * This is a method that uses prior process such as Camera and Gallery intent.
+     * This intent data is then passed into this method to display the results
+     * of the previous intent.
+     * Additionally text to speech components are called too process voice elements
+     * Authored by Anthony McDonald and Gareth Moore
      * @param requestCode
      * @param resultCode
      * @param data
      */
-    //@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         if (requestCode == MY_DATA_CHECK_CODE) {
@@ -866,13 +892,15 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
 //                Intent installTTSIntent = new Intent();
 //                installTTSIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
 //                startActivity(installTTSIntent);
-           // }
+            // }
         }
 
         if (resultCode == Activity.RESULT_OK) {
+            // If gallery was selected this code will display gallery data
             if (requestCode == REQUEST_CODE_GALLERY) {
                 onSelectFromGalleryResult(data);
             } else if (requestCode == REQUEST_IMAGE_CAPTURE) {
+                // If caputre was selected this code will display camera data
                 onCaptureImageResult(data);
             }
         }
@@ -882,7 +910,11 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
 
 
     /**
-     *
+     * This is a method that allows the saving of a photo file to the phone's
+     * internal storage. This method is called when Camera intent has been utilised.
+     * Once the photo is taken the photo file is saved to the phone and
+     * displayed in the image view allocated for showing activity result intent data.
+     * Authored by Anthony McDonald
      * @param data
      */
     private void onCaptureImageResult(Intent data) {
@@ -890,6 +922,8 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.PNG, 100, bytes);
 
+        // The below variables and functions are specifying to save the photo file
+        // as a JPEG and to allocate this file to the phones storage section.
         File destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".png");
 
@@ -905,14 +939,17 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
             e.printStackTrace();
         }
 
+        // Displayed the captured image result
         pecsView.setImageBitmap(thumbnail);
     }
 
     /**
-     *
+     * This is a method to access the phone's storage and allow for the selection
+     * of a specific photo file. Once the selection has been made this photo
+     * will be displayed in the image view for the activity result intent data.
+     * Authored by Anthony McDonald
      * @param data
      */
-    @SuppressWarnings("deprecation")
     private void onSelectFromGalleryResult(Intent data) {
         Uri uri = data.getData();
         if (data != null) {
@@ -920,6 +957,7 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
                 InputStream inputStream = getContentResolver().openInputStream(uri);
 
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                // Displaying the selected image in the image view
                 pecsView.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -1044,4 +1082,3 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
         }
     }
 }
-

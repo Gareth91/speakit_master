@@ -2,7 +2,7 @@ package project.allstate.speakitvisualcommunication;
 
 
 /**
- * Created by Ashley on 10/08/2017.
+ * Authored by Ashley Elliott
  */
 import android.app.Activity;
 import android.content.Intent;
@@ -14,7 +14,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import project.allstate.speakitvisualcommunication.R;
 
 public class SplashScreen extends Activity {
     public void onAttachedToWindow() {
@@ -22,7 +21,7 @@ public class SplashScreen extends Activity {
         Window window = getWindow();
         window.setFormat(PixelFormat.RGBA_8888);
     }
-    /** Called when the activity is first created. */
+    // Called when the activity is first created
     Thread splashTread;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,20 +30,24 @@ public class SplashScreen extends Activity {
         StartAnimations();
     }
     private void StartAnimations() {
+        //loads the animation as described in alpha anim class
         Animation anim = AnimationUtils.loadAnimation(this, R.anim.alpha);
         anim.reset();
         LinearLayout l=(LinearLayout) findViewById(R.id.lin_lay);
         l.clearAnimation();
+        //starts the animation
         l.startAnimation(anim);
 
+        //loads the animation as described in translate anim class
         anim = AnimationUtils.loadAnimation(this, R.anim.translate);
         anim.reset();
         ImageView iv = (ImageView) findViewById(R.id.splash);
         iv.clearAnimation();
+        //starts the animation
         iv.startAnimation(anim);
 
 
-
+        //Starts a new thread
         splashTread = new Thread() {
             @Override
             public void run() {
@@ -55,9 +58,11 @@ public class SplashScreen extends Activity {
                         sleep(100);
                         waited += 100;
                     }
+                    //creates a new intent
                     Intent intent = new Intent(SplashScreen.this,
                             MainScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    //starts the created intent
                     startActivity(intent);
                     SplashScreen.this.finish();
                 } catch (InterruptedException e) {

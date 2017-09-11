@@ -1,6 +1,8 @@
 package project.allstate.speakitvisualcommunication;
 
 
+
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -18,9 +20,15 @@ import project.allstate.speakitvisualcommunication.volley.VolleyCallBack;
 import project.allstate.speakitvisualcommunication.volley.VolleyHelp;
 import project.allstate.speakitvisualcommunication.volley.VolleyRequest;
 
+/**
+ * Created by Connaire Reid on 05/08/2017
+ * Modified by Gareth, Anthony and Ashley on 22/08/2017
+ */
+
 
 public class RegisterActivity extends AppCompatActivity {
 
+    //Declaration of items in activity
     EditText Email, confirmEmail, Password, confirmPassword, userName;
     Button Register;
 
@@ -35,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
         getSupportActionBar().setTitle("Register");
 
+        //Assign ids to each item
         Email = (EditText) findViewById(R.id.editText2);
         confirmEmail = (EditText) findViewById(R.id.editText3);
         Password = (EditText) findViewById(R.id.editText5);
@@ -46,7 +55,8 @@ public class RegisterActivity extends AppCompatActivity {
         Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //Validation methods for registration to ensure a username is entered, password is a minimum of 5 character,
+                // the password and confirm password match and the email and confirm email match
                 if (userName.getText().toString().equals("")) {
                     userName.getBackground().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
                 } else if (Email.getText().toString().equals("")) {
@@ -66,8 +76,8 @@ public class RegisterActivity extends AppCompatActivity {
                     confirmEmail.getBackground().clearColorFilter();
                     Password.getBackground().clearColorFilter();
                     confirmPassword.getBackground().clearColorFilter();
-                    //String BASE_URL = "http://awsandroid.eu-west-1.elasticbeanstalk.com/project/getUsername";
-//                String BASE_URL = "http://10.0.2.2:5000/project/getAccountUsername";
+
+                    //String BASE_URL = "http://10.0.2.2:5000/project/getAccountUsername";
                     String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/getAccountUsername";
                     String url = BASE_URL;
 
@@ -76,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     body.put("username", userName.getText().toString());
 
-
+                    //VolleyRequest to ensure the Username selected does not exist already
                     String contentType = "application/json";
                     VolleyRequest request = new VolleyRequest(RegisterActivity.this, VolleyHelp.methodDescription.POST, contentType, url, headers, body);
 
@@ -97,7 +107,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 body.put("email", confirmEmail.getText().toString());
                                 body.put("password", confirmPassword.getText().toString());
 
-
+                                //If username is unique another request will be sent to create a row with
+                                // the body of the VolleyRequest
                                 String contentType = "application/json";
                                 VolleyRequest request = new VolleyRequest(RegisterActivity.this, VolleyHelp.methodDescription.POST, contentType, url, headers, body);
 

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Menu layout for the menu icon in select user page -->
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Item shows log out-->
     <item
         android:id="@+id/action_logout"
         android:title="Log Out"

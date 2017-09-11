@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Menu layout for the menu icon in second screen -->
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Item shows  select user-->
     <item
         android:id="@+id/account2"
         android:title="@string/user_page"

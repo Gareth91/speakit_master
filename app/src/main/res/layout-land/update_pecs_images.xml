@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Portrait Layout for the update of category or word items -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff">
 
+    <!-- View where the word or category will be shown -->
     <EditText
         android:id="@+id/pecsName"
         android:layout_width="wrap_content"
@@ -17,6 +19,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="30dp" />
 
+    <!-- Button to close the pop up  -->
     <ImageButton
         android:id="@+id/dialogClose"
         android:layout_width="30dp"
@@ -24,6 +27,7 @@
         android:src="@drawable/delete"
         android:background="@drawable/sentence_builder_border"/>
 
+    <!-- Button to add the updated word or category item to the database  -->
     <Button
         android:id="@+id/btnUpdate"
         style="@style/Widget.AppCompat.Button.Borderless"
@@ -36,7 +40,8 @@
         android:layout_alignStart="@+id/pecsName"
         android:layout_marginStart="55dp" />
 
-
+    <!-- View where the current image is shown  -->
+    <!-- When clicked will allow user to add new image which will then be shown here  -->
     <ImageView
         android:id="@+id/pecsImage"
         android:layout_width="200dp"

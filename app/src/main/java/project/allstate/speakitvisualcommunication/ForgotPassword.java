@@ -19,8 +19,12 @@ import project.allstate.speakitvisualcommunication.volley.VolleyCallBack;
 import project.allstate.speakitvisualcommunication.volley.VolleyHelp;
 import project.allstate.speakitvisualcommunication.volley.VolleyRequest;
 
+/**
+ * Authored by Ashley Elliott and Anthony McDonald
+ */
 public class ForgotPassword extends AppCompatActivity {
 
+    //Instantiate objects
     EditText userEmail, userName;
     TextView information;
     Button submit;
@@ -44,24 +48,28 @@ public class ForgotPassword extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-               // String BASE_URL = "http://10.0.2.2:5000/project/getPassword";
+                //AWS link for this method
+                // String BASE_URL = "http://10.0.2.2:5000/project/getPassword";
                 String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/getPassword";
                 String url = BASE_URL;
 
+                //Creates a new Hashmap of String key value pairs
                 HashMap<String, String> headers  = new HashMap<>();
                 HashMap<String, String> body  = new HashMap<>();
 
+                //Adds Key Value pair to the JSON body
                 body.put("email", userEmail.getText().toString());
                 body.put("username", userName.getText().toString());
 
 
-
+                //Defines that the body type should be JSON
                 String contentType =  "application/json";
                 VolleyRequest request =   new VolleyRequest(ForgotPassword.this, VolleyHelp.methodDescription.POST, contentType, url, headers, body);
 
+                //Starts a new JSON request call
                 request.serviceJsonCall(new VolleyCallBack(){
                     @Override
+                    //on Success method if JSON request is successful
                     public void onSuccess(String result){
                         System.out.print("CALLBACK SUCCESS: " + result);
 
@@ -71,40 +79,17 @@ public class ForgotPassword extends AppCompatActivity {
                             String dbPassword = jsonObject.getString("password");
                             String dbUsername = jsonObject.getString("username");
 
-                                //Getting content for email
-                                String email = userEmail.getText().toString().trim();
-                                String subject = "Password Recovery";
-                                String message = "Hi " + dbUsername + " !" + "\n\n\n" +
-                                        "Your Password is: "+dbPassword+" ";
+                            //Getting content for email
+                            String email = userEmail.getText().toString().trim();
+                            String subject = "Password Recovery";
+                            String message = "Hi " + dbUsername + " !" + "\n\n\n" +
+                                    "Your Password is: "+dbPassword+" ";
 
-                                //Creating SendMail object
-                                SendMail sm = new SendMail(ForgotPassword.this, email, subject, message);
+                            //Creating SendMail object
+                            SendMail sm = new SendMail(ForgotPassword.this, email, subject, message);
 
-                                //Executing sendmail to send email
-                                sm.execute();
-
-
-//                            Log.i("Send email", "");
-//
-//                            String[] TO = {userEmail.getText().toString()};
-//                            Intent emailIntent = new Intent(Intent.ACTION_SEND);
-//                            emailIntent.setData(Uri.parse("mailto:"));
-//                            emailIntent.setType("text/plain");
-//
-//
-//                            emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-//                            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Password Recovery");
-//                            // Need to get data from database based on user email
-//                            emailIntent.putExtra(Intent.EXTRA_TEXT, "Your password is: "+ dbPassword +" . ");
-//
-//                            try {
-//                                startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-//                                finish();
-//                            } catch (android.content.ActivityNotFoundException ex) {
-//                                Toast.makeText(ForgotPassword.this,
-//                                        "There is no email client installed.", Toast.LENGTH_SHORT).show();
-//                            }
-
+                            //Executing sendmail to send email
+                            sm.execute();
 
 
                         }catch (JSONException e) {
@@ -114,6 +99,7 @@ public class ForgotPassword extends AppCompatActivity {
 
                     }
                     @Override
+                    //on Error method if JSON request does not succeed
                     public void onError(ErrorResponse errorResponse){
                         System.out.print("CALLBACK ERROR: " + errorResponse.getMessage());
                         Toast.makeText(ForgotPassword.this, "Invalid email or username", Toast.LENGTH_SHORT).show();

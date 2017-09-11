@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Portrait layout for the main screen -->
+<!-- Layout created by Gareth Moore  -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,6 +9,7 @@
     android:background="#7dd9ed"
     tools:context="project.allstate.speakitvisualcommunication.MainScreen">
 
+    <!-- Recycler view for the sentence builder -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_height="85dp"
@@ -25,6 +28,7 @@
         android:layout_alignParentEnd="true"
         android:layout_toEndOf="@+id/recyclerView" />-->
 
+    <!-- delete button for the sentence builder -->
     <ImageButton
         android:id="@+id/deleteB"
         android:layout_width="wrap_content"
@@ -37,6 +41,7 @@
         android:layout_toEndOf="@+id/recyclerView"
         android:layout_alignTop="@+id/recyclerView" />
 
+    <!-- Grid view used to create the grid layout to show the different categories  -->
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Portrait layout for the second screen  -->
+<!-- Layout created by Gareth Moore  -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,7 +9,7 @@
     android:background="#7dd9ed"
     tools:context="project.allstate.speakitvisualcommunication.SecondScreen">
 
-
+    <!-- Recycler view for the sentence builder -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView2"
         android:layout_height="85dp"
@@ -26,6 +28,7 @@
         android:layout_alignEnd="@+id/deleteB2"
         android:layout_toEndOf="@+id/recyclerView2" />-->
 
+    <!-- delete button for the sentence builder -->
     <ImageButton
         android:id="@+id/deleteB2"
         android:layout_width="wrap_content"
@@ -37,6 +40,7 @@
         android:layout_above="@+id/gridviewSecond"
         android:layout_alignParentTop="true" />
 
+    <!-- Grid view used to create the grid layout to show the different words  -->
     <GridView
         android:id="@+id/gridviewSecond"
         android:layout_width="match_parent"

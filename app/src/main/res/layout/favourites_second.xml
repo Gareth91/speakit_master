@@ -1,9 +1,13 @@
+<!-- Layout for the favourites word items in the grid view  -->
+<!-- Layout created by Gareth Moore  -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/second_screen">
 
+    <!-- Relative Layout within the linear layout where the word is shown  -->
+    <!-- References a drawable which gives the colour of the layout and the shape of the border -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -12,6 +16,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true">
 
+        <!-- View which displays the word -->
         <TextView
             android:id="@+id/wordText2"
             android:layout_width="wrap_content"
@@ -25,6 +30,7 @@
             />
     </RelativeLayout>
 
+    <!-- Frame layout where the image of the word is shown  -->
     <FrameLayout
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -34,6 +40,7 @@
         android:layout_marginTop="19dp"
         android:layout_marginBottom="22dp">
 
+        <!-- The image view which shows the image of the word  -->
         <ImageView
             android:id="@+id/imageview2"
             android:layout_width="match_parent"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<!-- Drawable to create border of grid view item about me -->
+<!-- Created by Gareth Moore -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle" >
     <!-- View background color -->

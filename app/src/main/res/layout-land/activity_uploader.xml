@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Landscape Layout for the uploader screen  -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff">
 
+    <!-- View where the user enters a word  -->
     <EditText
         android:id="@+id/edtName"
         android:layout_width="wrap_content"
@@ -17,7 +19,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="16dp" />
 
-
+    <!-- The image view which can be clicked to add a image from camera or gallery  -->
     <ImageView
         android:id="@+id/imageViewAdd"
         android:layout_width="200dp"
@@ -28,6 +30,7 @@
         android:layout_toStartOf="@+id/edtName"
         android:layout_marginBottom="24dp" />
 
+    <!-- The button which can be clicked to add a image from camera or gallery  -->
     <Button
         android:id="@+id/btnChoose"
         style="@style/Widget.AppCompat.Button.Borderless"
@@ -39,6 +42,7 @@
         android:layout_alignEnd="@+id/imageViewAdd"
         android:layout_marginEnd="31dp" />
 
+    <!-- Button that when clicked will lead to the word being added to database -->
     <Button
         android:id="@+id/btnAdd"
         style="@style/Widget.AppCompat.Button.Borderless"
@@ -49,6 +53,7 @@
         android:layout_toEndOf="@+id/imageViewAdd"
         android:layout_marginStart="39dp" />
 
+    <!-- Progress bar shown when new word is being added to database  -->
     <ProgressBar
         android:id="@+id/progressBar1"
         style="?android:attr/progressBarStyleLarge"

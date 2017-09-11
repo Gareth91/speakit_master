@@ -53,7 +53,7 @@ import static android.R.attr.id;
 
 /**
  * Class involved in the functionality on the user select page
- * Created by Gareth Moore
+ * Authored by Gareth Moore and Anthony McDonald
  */
 public class UserSelect extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
@@ -117,7 +117,7 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.activity_user_select);
 
         //Set back button in the bar at the top of screen
-        //Created by Gareth Moore
+        //Authored by Gareth Moore and Anthony McDonald
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
@@ -233,6 +233,7 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
 
     /**
      * When a user profile is long clicked gives the option to update or delete
+     * Authored by Anthony McDonald
      * @param adapterView
      * @param view
      * @param position
@@ -242,7 +243,9 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
         final User user = userList.get(position);
+        // Creating update and delete options for user
         CharSequence[] items = {"Update", "Delete"};
+        // launches popup activity for pre-defined options
         AlertDialog.Builder dialog = new AlertDialog.Builder(UserSelect.this);
 
         dialog.setTitle("Choose an action");
@@ -250,9 +253,10 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 if (item == 0) {
-                    //show dialog update at here
+                    // Navigate user to update activity
                     showDialogUpdate(UserSelect.this, user.getUserName());
                 } else {
+                    // Navigate user to delete activity
                     showDialogDelete(user.getUserName());
                 }
             }
@@ -263,12 +267,13 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
 
     /**
      * Method called when user wants to update the user profile
-     * Created by Gareth Moore
+     * Authored by Gareth Moore and Anthony McDonald
      * @param activity
      * @param userName
      */
     private void showDialogUpdate(Activity activity, final String userName) {
 
+        // Launching the update activity
         final Dialog dialog = new Dialog(activity);
         dialog.setContentView(R.layout.update_user);
         dialog.setTitle("Update");
@@ -330,7 +335,7 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onClick(View v) {
                 // request photo library
-               selectImage();
+                selectImage();
             }
         });
 
@@ -435,20 +440,25 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
     }
 
     /**
-     *
+     * Method used to check that permissions have been allowed by the User
+     * This references the Utility classes permission method
+     * Authored by Anthony McDonald
      * @param requestCode
      * @param permissions
      * @param grantResults
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
+        // Manages which type of request the user made
         switch (requestCode) {
+            // Approves or denies the permissions upon the user's request
             case Utility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // If permissions are accepted and take photo is selected, then camera intent will launch
                     if(userChosen.equals("Take Photo"))
                         cameraIntent();
                     else if(userChosen.equals("Choose from Library"))
+                        // If permissions are accepted and gallery is selected, then gallery intent will launch
                         galleryIntent();
                 } else {
                     //code for deny
@@ -462,15 +472,25 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
 
 
     /**
-     *
+     * This is a dialogue pop-up component to allow the user to select various options
+     * Authored by Anthony McDonald
      */
     private void selectImage() {
+        // This will display and list three categories available for the user to select
         final CharSequence[] items = { "Take Photo", "Choose from Library",
                 "Cancel" };
-
+        // This displays the pop-up based on the items defined in the previous statement
         AlertDialog.Builder builder = new AlertDialog.Builder(UserSelect.this);
         builder.setTitle("Add Photo");
         builder.setItems(items, new DialogInterface.OnClickListener() {
+            /**
+             * Once the dialogue options have been selected.
+             * This code will produce different intent results based on that chosen
+             * selection.
+             * Authored by Anthony McDonald
+             * @param dialog
+             * @param item
+             */
             @Override
             public void onClick(DialogInterface dialog, int item) {
                 boolean result=Utility.checkPermission(UserSelect.this);
@@ -494,7 +514,10 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
     }
 
     /**
-     *
+     * This is a method that is used to launch the gallery intent.
+     * It will launche the intent once permissions have been allowed and
+     * if a user has chosen the gallery option.
+     * Authored by Anthony McDonald
      */
     private void galleryIntent()
     {
@@ -505,7 +528,10 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
     }
 
     /**
-     *
+     * This is a method that is used to launch the camera intent.
+     * It will launche the intent once permissions have been allowed and
+     * if a user has chosen the camera option
+     * Authored by Anthony McDonald
      */
     private void cameraIntent()
     {
@@ -514,7 +540,10 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
     }
 
     /**
-     *
+     * This is a method that uses prior process such as Camera and Gallery intent.
+     * This intent data is then passed into this method to display the results
+     * of the previous intent.
+     * Authored by Anthony McDonald
      * @param requestCode
      * @param resultCode
      * @param data
@@ -524,15 +553,21 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
 
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_CODE_GALLERY)
+                // If gallery was selected this code will display gallery data
                 onSelectFromGalleryResult(data);
             else if (requestCode == REQUEST_IMAGE_CAPTURE)
+                // If caputre was selected this code will display camera data
                 onCaptureImageResult(data);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**
-     *
+     * This is a method that allows the saving of a photo file to the phone's
+     * internal storage. This method is called when Camera intent has been utilised.
+     * Once the photo is taken the photo file is saved to the phone and
+     * displayed in the image view allocated for showing activity result intent data.
+     * Authored by Anthony McDonald
      * @param data
      */
     private void onCaptureImageResult(Intent data) {
@@ -540,6 +575,8 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
 
+        // The below variables and functions are specifying to save the photo file
+        // as a JPEG and to allocate this file to the phones storage section.
         File destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
 
@@ -555,14 +592,17 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
             e.printStackTrace();
         }
 
+        // Displayed the captured image result
         imageView.setImageBitmap(thumbnail);
     }
 
     /**
-     *
+     * This is a method to access the phone's storage and allow for the selection
+     * of a specific photo file. Once the selection has been made this photo
+     * will be displayed in the image view for the activity result intent data.
+     * Authored by Anthony McDonald
      * @param data
      */
-    @SuppressWarnings("deprecation")
     private void onSelectFromGalleryResult(Intent data) {
         Uri uri = data.getData();
         if (data != null) {
@@ -570,6 +610,7 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
                 InputStream inputStream = getContentResolver().openInputStream(uri);
 
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                // Displaying the selected image in the image view
                 imageView.setImageBitmap(bitmap);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -581,11 +622,13 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
 
     /**
      * Method deletes an image from the list used to populate the GridView
-     * Created by Gareth Moore
+     * Created by Gareth Moore and Anthony McDonald
      */
     private void showDialogDelete(final String userName) {
+        // Launching the delete activity
         final AlertDialog.Builder dialogDelete = new AlertDialog.Builder(UserSelect.this);
 
+        // Code to prompt the user that content will be fully deleted
         dialogDelete.setTitle("Warning!!");
         dialogDelete.setMessage("Are you sure you want to delete?");
         dialogDelete.setPositiveButton("OK", new DialogInterface.OnClickListener() {

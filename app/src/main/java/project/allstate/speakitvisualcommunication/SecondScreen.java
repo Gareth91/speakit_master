@@ -141,7 +141,7 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_second_screen);
 
         //Set back button in the bar at the top of screen
-        //Created by Gareth Moore
+        //Authored by Anthony McDonald and Gareth Moore
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(category);
@@ -530,7 +530,8 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
-     * Adds onLongClick functionality
+     * Adds onLongClick functionality for adding favourites, deletiong and updating
+     * Authored by Gareth Moore and Anthony McDonald
      * @param adapterView
      * @param view
      * @param position
@@ -544,6 +545,7 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
             case R.id.gridviewSecond:
                 final PecsImages image = imageWords.get(position);
                 if (image.getNumber() != 1 && !category.equals("Favourites")) {
+                    // Creating options for user to update, delete and add to faviourts
                     CharSequence[] items = {"Update", "Delete", "Add to Favourites"};
                     AlertDialog.Builder dialog = new AlertDialog.Builder(SecondScreen.this);
 
@@ -557,9 +559,10 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
                         @Override
                         public void onClick(DialogInterface dialog, int item) {
                             if (item == 0) {
-                                // show dialog update at here
+                                // Navigate user to update activity
                                 showDialogUpdate(SecondScreen.this, image.getId());
                             } else if (item == 1) {
+                                // Navigate user to delete activity
                                 showDialogDelete(image.getId());
                             } else if (item == 2) {
                                 BitmapFactory.Options options = new BitmapFactory.Options();
@@ -760,12 +763,13 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
      * Method called when update is selected when user has clicked and held on an item within GridView.
      * This method will update a PecsImages object from the list. It will also then update
      * the database.
-     * Created by Gareth Moore
+     * Authored by Anthony McDonald and Gareth Moore
      * @param activity
      * @param id
      */
     private void showDialogUpdate(Activity activity, final int id) {
 
+        // Launching the update activity
         final Dialog dialog = new Dialog(activity);
         dialog.setContentView(R.layout.update_pecs_images);
         dialog.setTitle("Update");
@@ -948,12 +952,14 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
 
     /**
      * Method deletes an image from the list used to populate the GridView
-     * Created by Gareth Moore
+     * Authored by Anthony McDonald and Gareth Moore
      * @param idPecs
      */
     private void showDialogDelete(final int idPecs) {
+        // Launching the delete activity
         final AlertDialog.Builder dialogDelete = new AlertDialog.Builder(SecondScreen.this);
 
+        // Code to prompt the user that content will be fully deleted
         dialogDelete.setTitle("Warning!!");
         dialogDelete.setMessage("Are you sure you want to this delete?");
         dialogDelete.setPositiveButton("OK", new DialogInterface.OnClickListener() {

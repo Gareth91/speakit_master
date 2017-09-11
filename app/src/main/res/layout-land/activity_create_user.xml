@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Landscape layout for the create user page  -->
+<!-- Layout created by Gareth Moore -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff">
 
+    <!-- View allows user to enter a user profile  -->
     <EditText
         android:id="@+id/username"
         android:layout_width="wrap_content"
@@ -17,7 +20,7 @@
         android:layout_marginEnd="48dp"
         android:layout_marginTop="40dp" />
 
-
+    <!-- The image the user can click to take a photo for their user profile  -->
     <ImageView
         android:id="@+id/userImageAdd"
         android:layout_width="150dp"
@@ -28,6 +31,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="31dp" />
 
+    <!-- The button used to allow user to take a photo for their user profile -->
     <Button
         android:id="@+id/btnChooseImage"
         style="@style/Widget.AppCompat.Button.Borderless"
@@ -39,6 +43,7 @@
         android:layout_below="@+id/userImageAdd"
         android:layout_alignEnd="@+id/userImageAdd" />
 
+    <!-- The button used to add the user profile to the database when clicked  -->
     <Button
         android:id="@+id/btnAddImage"
         style="@style/Widget.AppCompat.Button.Borderless"
@@ -50,6 +55,7 @@
         android:layout_alignStart="@+id/username"
         android:layout_marginStart="38dp" />
 
+    <!-- Progress bar is shown when the new user profile is being added to the database  -->
     <ProgressBar
         android:id="@+id/progressBar1"
         style="?android:attr/progressBarStyleLarge"

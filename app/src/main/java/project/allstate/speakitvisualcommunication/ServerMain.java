@@ -20,26 +20,28 @@ import project.allstate.speakitvisualcommunication.volley.VolleyHelp;
 import project.allstate.speakitvisualcommunication.volley.VolleyRequest;
 
 /**
- * Created on 15/08/2017.
+ * Authored by Ashley Elliott and Gareth Moore
  */
 public class ServerMain {
 
     List<PecsImages> list = new ArrayList<>();
 
     /**
-     *
+     *Method to add new image using Volley
      * @param context
      */
     public void addImageWord(final Context context, String word, String category, String username, String number, Bitmap bitmapImage) {
 
-        //String BASE_URL = "http://awsandroid.eu-west-1.elasticbeanstalk.com/project/insertImage";
 //        String BASE_URL = "http://10.0.2.2:5000/project/insertImage";
+        //AWS link for this method
         String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/insertImage";
         String url = BASE_URL;
 
+        //Creates a new Hashmap of String key value pairs
         HashMap<String, String> headers  = new HashMap<>();
         HashMap<String, String> body  = new HashMap<>();
 
+        //Adds Key Value pairs to the JSON body
         body.put("id", null);
         body.put("word", word);
         body.put("category", category);
@@ -47,16 +49,19 @@ public class ServerMain {
         body.put("number", number);
         body.put("images", BitMapToString(bitmapImage));
 
+        //Defines that the body type should be JSON
         String contentType =  "application/json";
         VolleyRequest request =   new VolleyRequest(context, VolleyHelp.methodDescription.POST, contentType, url, headers, body);
 
+        //Starts a new JSON request call
         request.serviceJsonCall(new VolleyCallBack(){
             @Override
+            //on Success method if JSON request is successful
             public void onSuccess(String result){
                 System.out.print("CALLBACK SUCCESS: " + result);
                 Toast.makeText(context, "Success ", Toast.LENGTH_SHORT).show();
             }
-
+            //on Error method if JSON request does not succeed
             @Override
             public void onError(ErrorResponse errorResponse){
                 System.out.print("CALLBACK ERROR: " + errorResponse.getMessage());
@@ -71,29 +76,36 @@ public class ServerMain {
      */
     public void updateImageWord(final Context context, String id, String word, String category, Bitmap bitmapImage) {
 
+        //AWS link for this method
         String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/updateData";
         //String BASE_URL = "http://localhost:5000/project/updateData";
         String url = BASE_URL;
 
+        //Creates a new Hashmap of String key value pairs
         HashMap<String, String> headers  = new HashMap<>();
         HashMap<String, String> body  = new HashMap<>();
 
+        //Adds Key Value pairs to the JSON body
         body.put("id", id);
         body.put("word", word);
         body.put("category", "At Home");//category);
         body.put("image", BitMapToString(bitmapImage));
 
+        //Defines that the body type should be JSON
         String contentType =  "application/json";
         VolleyRequest request =   new VolleyRequest(context, VolleyHelp.methodDescription.POST, contentType, url, headers, body);
 
+        //Starts a new JSON request call
         request.serviceJsonCall(new VolleyCallBack(){
             @Override
+            //on Success method if JSON request is successful
             public void onSuccess(String result){
                 System.out.print("CALLBACK SUCCESS: " + result);
                 Toast.makeText(context, "Success ", Toast.LENGTH_LONG).show();
             }
 
             @Override
+            //on Error method if JSON request does not succeed
             public void onError(ErrorResponse errorResponse){
                 System.out.print("CALLBACK ERROR: " + errorResponse.getMessage());
             }
@@ -106,26 +118,33 @@ public class ServerMain {
      */
     public void deleteImageWord(final Context context, String id) {
 
+        //AWS link for this method
         String BASE_URL = "awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/deleteData";
         //String BASE_URL = "http://localhost:5000/project/deleteData";
         String url = BASE_URL;
 
+        //Creates a new Hashmap of String key value pairs
         HashMap<String, String> headers  = new HashMap<>();
         HashMap<String, String> body  = new HashMap<>();
 
+        //Adds Key Value pair to the JSON body
         body.put("id", id);
 
+        //Defines that the body type should be JSON
         String contentType =  "application/json";
         VolleyRequest request =   new VolleyRequest(context, VolleyHelp.methodDescription.POST, contentType, url, headers, body);
 
+        //Starts a new JSON request call
         request.serviceJsonCall(new VolleyCallBack(){
             @Override
+            //on Success method if JSON request is successful
             public void onSuccess(String result){
                 System.out.print("CALLBACK SUCCESS: " + result);
                 Toast.makeText(context, "Success ", Toast.LENGTH_LONG).show();
             }
 
             @Override
+            //on Error method if JSON request does not succeed
             public void onError(ErrorResponse errorResponse){
                 System.out.print("CALLBACK ERROR: " + errorResponse.getMessage());
             }
@@ -138,28 +157,35 @@ public class ServerMain {
      */
     public void addUser(final Context context, String username, String accountUsername, Bitmap bitmapImage) {
 
+        //AWS link for this method
         String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/insertUser";
         //String BASE_URL = "http://localhost:5000/project/insertUser";
         String url = BASE_URL;
 
+        //Creates a new Hashmap of String key value pairs
         HashMap<String, String> headers  = new HashMap<>();
         HashMap<String, String> body  = new HashMap<>();
 
+        //Adds Key Value pair to the JSON body
         body.put("username", "ashley");//username);
         body.put("image", BitMapToString(bitmapImage));
         body.put("accountusername", accountUsername);
 
+        //Defines that the body type should be JSON
         String contentType =  "application/json";
         VolleyRequest request =   new VolleyRequest(context, VolleyHelp.methodDescription.POST, contentType, url, headers, body);
 
+        //Starts a new JSON request call
         request.serviceJsonCall(new VolleyCallBack(){
             @Override
+            //on Success method if JSON request is successful
             public void onSuccess(String result){
                 System.out.print("CALLBACK SUCCESS: " + result);
                 Toast.makeText(context, "Success ", Toast.LENGTH_LONG).show();
             }
 
             @Override
+            //on Error method if JSON request does not succeed
             public void onError(ErrorResponse errorResponse){
                 System.out.print("CALLBACK ERROR: " + errorResponse.getMessage());
             }
@@ -173,27 +199,34 @@ public class ServerMain {
      */
     public void updateUser(final Context context, String username, Bitmap bitmapImage) {
 
+        //AWS link for this method
         String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/updateUser";
         //String BASE_URL = "http://localhost:5000/project/updateUser";
         String url = BASE_URL;
 
+        //Creates a new Hashmap of String key value pairs
         HashMap<String, String> headers  = new HashMap<>();
         HashMap<String, String> body  = new HashMap<>();
 
+        //Adds Key Value pair to the JSON body
         body.put("username", "ashley");//username);
         body.put("image", BitMapToString(bitmapImage));
 
+        //Defines that the body type should be JSON
         String contentType =  "application/json";
         VolleyRequest request =   new VolleyRequest(context, VolleyHelp.methodDescription.POST, contentType, url, headers, body);
 
+        //Starts a new JSON request call
         request.serviceJsonCall(new VolleyCallBack(){
             @Override
+            //on Success method if JSON request is successful
             public void onSuccess(String result){
                 System.out.print("CALLBACK SUCCESS: " + result);
                 Toast.makeText(context, "Success ", Toast.LENGTH_LONG).show();
             }
 
             @Override
+            //on Error method if JSON request does not succeed
             public void onError(ErrorResponse errorResponse){
                 System.out.print("CALLBACK ERROR: " + errorResponse.getMessage());
             }
@@ -206,26 +239,33 @@ public class ServerMain {
      */
     public void deleteUser(final Context context, String username) {
 
+        //AWS link for this method
         String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/deleteUser";
         //String BASE_URL = "http://localhost:5000/project/deleteUser";
         String url = BASE_URL;
 
+        //Creates a new Hashmap of String key value pairs
         HashMap<String, String> headers  = new HashMap<>();
         HashMap<String, String> body  = new HashMap<>();
 
+        //Adds Key Value pair to the JSON body
         body.put("username", username);
 
+        //Defines that the body type should be JSON
         String contentType =  "application/json";
         VolleyRequest request =   new VolleyRequest(context, VolleyHelp.methodDescription.POST, contentType, url, headers, body);
 
+        //Starts a new JSON request call
         request.serviceJsonCall(new VolleyCallBack(){
             @Override
+            //on Success method if JSON request is successful
             public void onSuccess(String result){
                 System.out.print("CALLBACK SUCCESS: " + result);
                 Toast.makeText(context, "Success ", Toast.LENGTH_LONG).show();
             }
 
             @Override
+            //on Error method if JSON request does not succeed
             public void onError(ErrorResponse errorResponse){
                 System.out.print("CALLBACK ERROR: " + errorResponse.getMessage());
             }
@@ -241,21 +281,27 @@ public class ServerMain {
      */
     public void ImageWord(final Context context) {
 
+        //AWS link for this method
         //String BASE_URL = "http://awsandroid.eu-west-1.elasticbeanstalk.com/project/insertImage";
         String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/return";
         String url = BASE_URL;
 
+        //Creates a new Hashmap of String key value pairs
         HashMap<String, String> headers  = new HashMap<>();
         HashMap<String, String> body  = new HashMap<>();
 
+        //Adds Key Value pair to the JSON body
         body.put("category", "HELP");
         body.put("username", "Ashley");
 
+        //Defines that the body type should be JSON
         String contentType =  "application/json";
         VolleyRequest request =   new VolleyRequest(context, VolleyHelp.methodDescription.POST, contentType, url, headers, body);
 
+        //Starts a new JSON request call
         request.serviceJsonCall(new VolleyCallBack(){
             @Override
+            //on Success method if JSON request is successful
             public void onSuccess(String result){
                 System.out.print("CALLBACK SUCCESS: " + result);
                 Toast.makeText(context, "Success ", Toast.LENGTH_LONG).show();
@@ -265,7 +311,7 @@ public class ServerMain {
                 ops.open();
                 try {
                     jsonarray = new JSONArray(result);
-
+                    //for loop that parses returned array
                     for (int loop = 0; loop < jsonarray.length(); loop++) {
                         JSONObject jsonobject = jsonarray.getJSONObject(loop);
                         String word = jsonobject.getString("word");
@@ -288,6 +334,7 @@ public class ServerMain {
             }
 
             @Override
+            //on Error method if JSON request does not succeed
             public void onError(ErrorResponse errorResponse){
                 System.out.print("CALLBACK ERROR: " + errorResponse.getMessage());
             }
@@ -298,7 +345,7 @@ public class ServerMain {
 
 
     /**
-     *
+     *Method to convert Bitmap image to string value
      * @param bitmap
      * @return
      */

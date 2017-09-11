@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Layout for the action words pop up -->
+<!-- Layout created by Gareth Moore  -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -6,6 +8,7 @@
     android:background="#7dd9ed"
     tools:context="project.allstate.speakitvisualcommunication.ActionWords">
 
+    <!-- The grid view where the user profile items will be shown -->
     <GridView
         android:id="@+id/gridviewThird"
         android:layout_width="match_parent"

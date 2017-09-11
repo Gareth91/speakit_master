@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Landscape layout for the user select screen  -->
+<!-- Layout created by Gareth Moore  -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -6,6 +8,7 @@
     android:background="#ffffff"
     tools:context="project.allstate.speakitvisualcommunication.UserSelect">
 
+    <!-- Title at the top of the page  -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,6 +19,7 @@
         android:layout_alignBottom="@+id/imageView"
         android:layout_toStartOf="@+id/imageView" />
 
+    <!-- Cartoon image at the top of the page  -->
     <ImageView
         android:layout_width="70dp"
         android:layout_height="70dp"
@@ -27,6 +31,7 @@
         android:layout_toStartOf="@+id/buttonAddUser"
         android:layout_marginBottom="12dp" />
 
+    <!-- View explaining to the user they have to select a user profile  -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,6 +44,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="13dp" />
 
+    <!-- Grid view used to create the grid layout to show the different user profiles  -->
     <GridView
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -53,6 +59,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"></GridView>
 
+    <!-- The button used to take the user to the create user page  -->
     <Button
         android:layout_width="135dp"
         android:layout_height="wrap_content"

@@ -1,24 +1,24 @@
 package project.allstate.speakitvisualcommunication;
 
 /**
- * Created by Ashley on 22/08/2017.
+ * Authored by Ashley Elliott and Anthony McDonald
  */
 
 
-        import android.app.ProgressDialog;
-        import android.content.Context;
-        import android.os.AsyncTask;
-        import android.widget.Toast;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.widget.Toast;
 
-        import java.util.Properties;
+import java.util.Properties;
 
-        import javax.mail.Message;
-        import javax.mail.MessagingException;
-        import javax.mail.PasswordAuthentication;
-        import javax.mail.Session;
-        import javax.mail.Transport;
-        import javax.mail.internet.InternetAddress;
-        import javax.mail.internet.MimeMessage;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 
 //Class is extending AsyncTask because this class is going to perform a networking operation
