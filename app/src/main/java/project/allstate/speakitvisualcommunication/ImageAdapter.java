@@ -14,7 +14,8 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
- * Created by Gareth on 27/07/2017.
+ * Class is used to populate grid views
+ * Created by Gareth Moore on 27/07/2017.
  */
 
 public class ImageAdapter extends BaseAdapter {
@@ -82,7 +83,9 @@ public class ImageAdapter extends BaseAdapter {
     }
 
     /**
-     *
+     * Method used to add items to the grid
+     * A different layout will be inflated depending on the context and the category
+     * Created by Gareth Moore
      * @param position
      * @param convertView
      * @param parent
@@ -196,6 +199,7 @@ public class ImageAdapter extends BaseAdapter {
 
     /**
      * The view holder that holds references to each subview
+     * Created by Gareth Moore
      */
     private class ViewHolder {
 

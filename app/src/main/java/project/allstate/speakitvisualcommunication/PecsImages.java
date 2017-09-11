@@ -3,7 +3,7 @@ package project.allstate.speakitvisualcommunication;
 import java.io.Serializable;
 
 /**
- * Created by Gareth on 27/07/2017.
+ * Created by Gareth Moore on 27/07/2017.
  * Class is used to create objects which will be used to communicate.
  */
 public class PecsImages implements Serializable {

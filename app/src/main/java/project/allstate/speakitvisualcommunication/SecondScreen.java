@@ -55,7 +55,7 @@ import project.allstate.speakitvisualcommunication.volley.VolleyHelp;
 import project.allstate.speakitvisualcommunication.volley.VolleyRequest;
 
 /**
- * Created by Gareth
+ * Created by Gareth Moore
  */
 public class SecondScreen extends AppCompatActivity implements AdapterView.OnItemClickListener, TextToSpeech.OnInitListener, AdapterView.OnItemLongClickListener, View.OnClickListener, View.OnLongClickListener{
 
@@ -66,47 +66,42 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
     private int MY_DATA_CHECK_CODE = 0;
 
     /**
-     *
+     * The list of image object
      */
     private List<PecsImages> imageWords;
 
     /**
-     *
+     * The list of image objects in sentence builder
      */
     private List<PecsImages> sentenceWords;
 
     /**
-     *
-     */
-    private List<PecsImages> list = new ArrayList<>();
-
-    /**
-     *
+     * The RecyclerView used to make the sentence builder
      */
     private RecyclerView recyclerView;
 
     /**
-     *
+     * The adapter used to populate the RecyclerView
      */
     private SentenceBuilderAdapter mAdapter;
 
     /**
-     *
+     * Instance of the DatabaseOperations class
      */
     private DatabaseOperations ops;
 
     /**
-     *
+     * An ImageView
      */
     private ImageView pecsView;
 
     /**
-     *
+     * The category
      */
     private String category;
 
     /**
-     *
+     * The user chosen
      */
     private String userChosen;
 
@@ -121,53 +116,55 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
     final int REQUEST_IMAGE_CAPTURE = 0;
 
     /**
-     *
+     * The login name of the account
      */
     private String logName;
 
     /**
-     *
+     * The user selected
      */
     String user = null;
 
     /**
-     *
+     * The adapter class used to populate the grid view
      * @param savedInstanceState
      */
     private ImageAdapter imageAdapter;
 
-    private ServerMain serverMain = new ServerMain();
-
-
-
+    /**
+     * onCreate method called when screen is first created
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second_screen);
 
         //Set back button in the bar at the top of screen
+        //Created by Gareth Moore
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle(category);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
 
-
-        //
+        //Opens the SQLite database
         ops = new DatabaseOperations(getApplicationContext());
         ops.open();
 
-        //
+        //Intent get the category and user
+        //The login name is retrieved from the DataHolder class
+        //Created by Gareth Moore
         Intent intent = getIntent();
         category = intent.getStringExtra("project.allstate.speakitvisualcommunication.Category");
         user = intent.getStringExtra("project.allstate.speakitvisualcommunication.username2");
         logName = DataHolder.getInstance().getLogin();
 
-        getSupportActionBar().setTitle(category);
-
-        //
         imageWords = new ArrayList<>();
         imageWords.clear();
 
-        //
+        //The correct pre-loaded image objects are added to the list used to populate
+        //the grid view based on category
+        //Created by Gareth Moore
         switch (category){
             case "Favourites":
                 PecsImages image = new PecsImages(getString(R.string.Action_Words),R.drawable.red_action_word,1);
@@ -323,9 +320,9 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
                 PecsImages add = new PecsImages((getString(R.string.Add_Word)), R.drawable.add_word_green,1);
                 imageWords.add(add);
                 break;
-
         }
-        //
+        //The grid view is referenced and the list of image objects added using ImageAdapter
+        //Created by Gareth Moore
         final GridView gridView = (GridView)findViewById(R.id.gridviewSecond);
         imageAdapter = new ImageAdapter(this, imageWords, category);
         gridView.setAdapter(imageAdapter);
@@ -333,9 +330,14 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
 
         //
         if (user != null) {
+            /**
+             * If the category is favourites a volley request getting the image objects from favourites is set up
+             * If successful these image objects are added to the grid view
+             * Created by Gareth Moore
+             */
             if (category.equals("Favourites")) {
                 //list = ops.getData(category, user);
-//                String BASE_URL = "http://10.0.2.2:5000/project/getFavourite";
+                //String BASE_URL = "http://10.0.2.2:5000/project/getFavourite";
                 String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/getFavourite";
                 String url = BASE_URL;
 
@@ -377,8 +379,12 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
                     }
                 });
             } else {
+                /**
+                 * If it is any other catgegory then a volley request is set up to return image objects
+                 * from the images table with a specific category and username
+                 * Created by Gareth Moore
+                 */
                 //list = ops.getData(category, user);
-                //String BASE_URL = "http://awsandroid.eu-west-1.elasticbeanstalk.com/project/insertImage";
                 //String BASE_URL = "http://10.0.2.2:5000/project/return";
                 String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/return";
                 String url = BASE_URL;
@@ -425,31 +431,32 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
             }
         }
 
-        //
         gridView.setOnItemLongClickListener(this);
 
-        //
+        //The recycler view is setup
+        //Created by Gareth Moore
         sentenceWords = new ArrayList<>();
-        //
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView2);
         mAdapter = new SentenceBuilderAdapter(sentenceWords);
         RecyclerView.LayoutManager mLayoutManage = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(mLayoutManage);
         recyclerView.setAdapter(mAdapter);
 
+        //onClickListener setup with delete button. This allows for an image to be deleted from
+        //the sentence builder.
+        //Created by Gareth Moore
         ImageButton cancelButton = (ImageButton) findViewById(R.id.deleteB2);
         cancelButton.setOnClickListener(this);
         cancelButton.setOnLongClickListener(this);
-        //ImageButton playButton = (ImageButton) findViewById(R.id.speakB2);
-        //playButton.setOnClickListener(this);
-
 
         //check for TTS data
+        //Created by Gareth Moore
         Intent checkTTSIntent = new Intent();
         checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
         startActivityForResult(checkTTSIntent, MY_DATA_CHECK_CODE);
 
-        //
+        //The sentence builder is populated with any image objects in sentence table
+        //Created by Gareth Moore
         List<PecsImages> sentenceList = new ArrayList<>();
         sentenceList = ops.getSentenceData();
         sentenceWords.addAll(sentenceList);
@@ -458,11 +465,12 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
-     *
+     *Method adds functionality to the item clicks within the GridView.
      * @param parent
      * @param view
      * @param position
      * @param id
+     * Created by Gareth Moore
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -470,25 +478,34 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
             case R.id.gridviewSecond:
                 PecsImages image = imageWords.get(position);
                 speakWords(image.getWord());
+                //if action words selected brings up action words pop up
                 if (image.getWord().equals("Action Words")) {
                     Intent actionWords = new Intent(getApplicationContext(), ActionWords.class);
                     startActivity(actionWords);
                 } else if (image.getWord().equals("Add Word") && user != null) {
+                    //If add word is selected and user is not null takes user to uploader page
                     Intent upload = new Intent(getApplicationContext(), Uploader.class);
                     upload.putExtra("project.allstate.speakitvisualcommunication.User", user);
                     upload.putExtra("project.allstate.speakitvisualcommunication.page", category);
                     startActivity(upload);
                 } else if(image.getWord().equals("Add Word") && user == null) {
-                    Toast.makeText(this, "Please select user",Toast.LENGTH_LONG ).show();
+                    //If add word is selected and user is null
+
                     if (logName == null) {
+                        //If not logged takes user to login page
+                        Toast.makeText(this, "Please Login",Toast.LENGTH_SHORT ).show();
                         Intent logIntent = new Intent(SecondScreen.this, LoginScreen.class);
                         startActivity(logIntent);
                     } else if (logName != null) {
+                        //If logged in takes user to user select page
+                        Toast.makeText(this, "Please select user",Toast.LENGTH_SHORT ).show();
                         Intent userIntent = new Intent(SecondScreen.this, UserSelect.class);
                         startActivity(userIntent);
                     }
                 } else {
+                    //if any other word is selected adds item to the sentence builder
                     if (image.getNumber() == 1) {
+                        //if a drawable has to be converted
                         Drawable drawable = getResources().getDrawable(image.getImage());
                         Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
                         ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -513,7 +530,7 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
-     *
+     * Adds onLongClick functionality
      * @param adapterView
      * @param view
      * @param position
@@ -573,7 +590,7 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
                     });
                     dialog.show();
                     status = true;
-                } else if (image.getNumber() == 1 && !category.equals("Favourites") && !image.getWord().equals("Action Words") && !image.getWord().equals("Add Word") && logName != null) {
+                } else if (image.getNumber() == 1 && !category.equals("Favourites") && !image.getWord().equals("Action Words") && !image.getWord().equals("Add Word") && logName != null && user != null) {
                     CharSequence[] items = {"Add to Favourites"};
                     AlertDialog.Builder dialog = new AlertDialog.Builder(SecondScreen.this);
 
@@ -613,7 +630,9 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
-     *
+     * Method called when delete button for the sentence builder is clicked
+     * If the sentence builder contains items the item last in the list will be deleted
+     * Created by Gareth Moore
      * @param view
      */
     @Override
@@ -626,20 +645,18 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
                     mAdapter.notifyDataSetChanged();
                 }
                 break;
-            //case R.id.speakB2:
-               // StringBuilder finalStringb =new StringBuilder();
-               // for (PecsImages item : sentenceWords) {
-                  //  finalStringb.append(item.getWord()).append(" ");
-              //  }
-              //  speakWords(finalStringb.toString());
-
-              //  break;
             default:
                 break;
         }
     }
 
-
+    /**
+     * If the delete button for sentence builder is long clicked method will be called
+     * This will delete all items in the sentence builder.
+     * Created by Gareth Moore
+     * @param v
+     * @return
+     */
     @Override
     public boolean onLongClick(View v) {
         switch (v.getId()) {
@@ -660,7 +677,8 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
 
 
     /**
-     *
+     * Method used to speak
+     * Created by Gareth Moore
      * @param speech
      */
     private void speakWords(String speech) {
@@ -671,7 +689,8 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
 
 
     /**
-     *
+     * Method sets up the language for text to speech
+     * Created by Gareth Moore
      * @param initStatus
      */
     @Override
@@ -689,7 +708,7 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
-     *
+     * Inflates the menu layout to create menu icon in toolbar
      * @param menu
      * @return
      */
@@ -703,7 +722,9 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
 
 
     /**
-     * Method for the selection of the home button
+     * Method for the selection of the home button, user select item and play icon
+     * within the toolbar
+     * Created by Gareth Moore
      * @param item
      * @return
      */
@@ -736,7 +757,10 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
-     *
+     * Method called when update is selected when user has clicked and held on an item within GridView.
+     * This method will update a PecsImages object from the list. It will also then update
+     * the database.
+     * Created by Gareth Moore
      * @param activity
      * @param id
      */
@@ -751,8 +775,11 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
         Button btnUpdate = (Button) dialog.findViewById(R.id.btnUpdate);
         ImageButton back = (ImageButton)dialog.findViewById(R.id.dialogClose);
 
-        //String BASE_URL = "http://awsandroid.eu-west-1.elasticbeanstalk.com/project/getOneUser";
-//        String BASE_URL = "http://10.0.2.2:5000/project/getOne";
+        /**
+         * Volley request set up to get the information on the object that has been selected to update.
+         * Created by Gareth Moore
+         */
+        //String BASE_URL = "http://10.0.2.2:5000/project/getOne";
         String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/getOne";
         String url = BASE_URL;
         Integer imageId = id;
@@ -806,19 +833,26 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
+        /**
+         * When update button is clicked a volley request will be sent to update the information in the database
+         * Created by Gareth Moore
+         */
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
+                    //Original method set up to mimic what would happen when image is brought in from database
 //                    ops.updateData(
 //                            edtName.getText().toString().trim(),
 //                            Uploader.imageViewToByte(pecsView), category,
 //                            id
 //                    );
+                    /**
+                     * Volley request used to upadate the data within the database
+                     * Created by Gareth Moore
+                     */
                     final Integer userId = id;
-                    //serverMain.updateImageWord(SecondScreen.this, userId.toString(), edtName.getText().toString(), category, ((BitmapDrawable)pecsView.getDrawable()).getBitmap());
-                    //String BASE_URL = "http://awsandroid.eu-west-1.elasticbeanstalk.com/project/updateData";
-//                    String BASE_URL = "http://10.0.2.2:5000/project/updateData";
+                    //String BASE_URL = "http://10.0.2.2:5000/project/updateData";
                     String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/updateData";
                     String url = BASE_URL;
 
@@ -839,14 +873,19 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
                         public void onSuccess(String result){
                             System.out.print("CALLBACK SUCCESS: " + result);
 
+                            /**
+                             * As information has been successfully updated the original image object
+                             * is removed from the list then a volley request returns the updated image
+                             * and this is added to the list and the image adapter is notified
+                             * Created by Gareth Moore
+                             */
                             Iterator<PecsImages> iterator = imageWords.iterator();
                             while (iterator.hasNext()) {
                                 if(iterator.next().getId() == id) {
                                     iterator.remove();
                                     imageAdapter.notifyDataSetChanged();
                                     //PecsImages item = ops.getItem(id);
-                                    //String BASE_URL = "http://awsandroid.eu-west-1.elasticbeanstalk.com/project/getOne";
-//                                    String BASE_URL = "http://10.0.2.2:5000/project/getOne";
+                                    //String BASE_URL = "http://10.0.2.2:5000/project/getOne";
                                     String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/getOne";
                                     String url = BASE_URL;
 
@@ -908,7 +947,8 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
-     *
+     * Method deletes an image from the list used to populate the GridView
+     * Created by Gareth Moore
      * @param idPecs
      */
     private void showDialogDelete(final int idPecs) {
@@ -920,10 +960,15 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 try {
+                    /**
+                     * Volley request deletes the image object from the database. If successful
+                     * the image object is removed from the list used to populate grid view
+                     * and the image adapter is notified
+                     * Created by Gareth Moore
+                     */
                     //ops.deleteData(idPecs);
                     Integer deleteId = idPecs;
-                    //String BASE_URL = "http://awsandroid.eu-west-1.elasticbeanstalk.com/project/deleteData";
-//                    String BASE_URL = "http://10.0.2.2:5000/project/deleteData";
+                    //String BASE_URL = "http://10.0.2.2:5000/project/deleteData";
                     String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/deleteData";
                     String url = BASE_URL;
 
@@ -970,8 +1015,14 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
-     *
+     * /**
+     * Method used to add the item to the favourites table. Voley request is used to add the information
+     * If successful a message will be displayed telling the user the item was added successfully
+     * Created by Gareth Moore
      * @param image
+     *    - The image to be added
+     * @param word
+     *    - The word to be added
      */
     public void addToFavourites(Bitmap image, String word) {
         //String BASE_URL = "http://awsandroid.eu-west-1.elasticbeanstalk.com/project/addFavourite";
@@ -1005,8 +1056,12 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
-     *
+     * Method used to delete an item if the category is favourites
+     * Volley request is used to delete an item in the database with a particular id
+     * If successful the item is then removed from the list used to populate the grid view
+     * Created by Gareth Moore
      * @param idPecs
+     *   - The id of the item
      */
     private void showDialogDeleteFavourite(final int idPecs) {
         final AlertDialog.Builder dialogDelete = new AlertDialog.Builder(SecondScreen.this);
@@ -1019,8 +1074,7 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
                 try {
                     //ops.deleteData(idPecs);
                     Integer deleteId = idPecs;
-                    //String BASE_URL = "http://awsandroid.eu-west-1.elasticbeanstalk.com/project/deleteFavourite";
-//                    String BASE_URL = "http://10.0.2.2:5000/project/deleteFavourite";
+                    //String BASE_URL = "http://10.0.2.2:5000/project/deleteFavourite";
                     String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/deleteFavourite";
                     String url = BASE_URL;
 
@@ -1091,7 +1145,7 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
-     *
+     * Select whether to take a photo using camera or from gallery
      */
     private void selectImage() {
         final CharSequence[] items = { "Take Photo", "Choose from Library",
@@ -1146,7 +1200,8 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
-     *
+     * Checks the data is available for text to speech
+     * Created by Gareth Moore
      * @param requestCode
      * @param resultCode
      * @param data
@@ -1225,7 +1280,8 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
-     *
+     * Convert bitmap to string
+     * Created by Gareth Moore
      * @param bitmap
      * @return
      */
@@ -1239,7 +1295,8 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
 
 
     /**
-     * onResume method
+     * onResume method open SQLite database and updates the sentence builder
+     * Created by Gareth Moore
      */
     public void onResume() {
         super.onResume();
@@ -1256,7 +1313,8 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
     }
 
     /**
-     *onStop method closes the event listener
+     *onStop method closes SQLite database
+     * Created by Gareth Moore
      */
     @Override
     public void  onStop() {
@@ -1266,6 +1324,8 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
 
     /**
      * When the activity is finished the method will close the  SQLite database.
+     * Closes the text to speech preventing data leaks
+     * Created by Gareth Moore
      */
     @Override
     public void onDestroy() {
@@ -1278,7 +1338,5 @@ public class SecondScreen extends AppCompatActivity implements AdapterView.OnIte
         }
 
     }
-
-
 
 }

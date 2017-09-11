@@ -1,9 +1,8 @@
 package project.allstate.speakitvisualcommunication;
 
 /**
- * Created by Gareth on 07/08/2017.
+ * Created by Gareth Moore on 07/08/2017.
  */
-
 public class User {
 
     /**

@@ -52,17 +52,18 @@ import project.allstate.speakitvisualcommunication.volley.VolleyRequest;
 import static android.R.attr.id;
 
 /**
- * Created by Gareth
+ * Class involved in the functionality on the user select page
+ * Created by Gareth Moore
  */
 public class UserSelect extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
     /**
-     *
+     * Add button
      */
     private Button add;
 
     /**
-     *
+     * Database operations class
      */
     private DatabaseOperations ops;
 
@@ -77,37 +78,37 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
     final int REQUEST_IMAGE_CAPTURE = 0;
 
     /**
-     *
+     * GridView
      */
     private GridView gridView;
 
     /**
-     *
+     * A list of user profiles
      */
     private List<User> userList = new ArrayList<>();
 
     /**
-     *
+     * Adapter class used to populate the grid view
      */
     private UserAdapter userAdapter;
 
     /**
-     *
+     * ImageView
      */
     private ImageView imageView;
 
     /**
-     *
+     * The user chosen
      */
     private String userChosen;
 
     /**
-     *
+     * The login name for the account
      */
     String logName = null;
 
     /**
-     *
+     * onCreate method called when screen is first created
      * @param savedInstanceState
      */
     @Override
@@ -116,19 +117,25 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
         setContentView(R.layout.activity_user_select);
 
         //Set back button in the bar at the top of screen
+        //Created by Gareth Moore
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
 
+        //Click event set up on the create user button
+        //Created by Gareth Moore
         add = (Button) findViewById(R.id.buttonAddUser);
         add.setOnClickListener(this);
 
         ops = new DatabaseOperations(getApplicationContext());
         ops.open();
 
+        //Gets the login name from the data holder
+        //Created by Gareth Moore
         logName = DataHolder.getInstance().getLogin();
 
-
+        //Sets up the grid view
+        //Created by Gareth Moore
         List<User> list = new ArrayList<>();
         //list = ops.getUsers(logName);
         //userList.addAll(list);
@@ -136,8 +143,13 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
         userAdapter = new UserAdapter(this, userList);
         gridView.setAdapter(userAdapter);
 
-        //String BASE_URL = "http://awsandroid.eu-west-1.elasticbeanstalk.com/project/getUsers";
-//        String BASE_URL = "http://10.0.2.2:5000/project/getUsers";
+        /**
+         * Volley request returns all the user profiles under a particular account name
+         * If successful adds these to the grid view using the adapter class
+         * If the nuber of profile is 6 then the create user button is disabled
+         * Created by Gareth Moore
+         */
+        //String BASE_URL = "http://10.0.2.2:5000/project/getUsers";
         String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/getUsers";
         String url = BASE_URL;
 
@@ -175,20 +187,22 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
                     e.printStackTrace();
                 }
             }
-
             @Override
             public void onError(ErrorResponse errorResponse){
                 System.out.print("CALLBACK ERROR: " + errorResponse.getMessage());
             }
         });
 
+        //item click and long item click
+        //Created by Gareth Moore
         gridView.setOnItemClickListener(this);
         gridView.setOnItemLongClickListener(this);
 
     }
 
     /**
-     *
+     * Method takes user to the create user page when create user button is selected
+     * Created by Gareth Moore
      * @param view
      */
     @Override
@@ -199,7 +213,9 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
     }
 
     /**
-     *
+     * When a user profile is selected in grid view returns user to main screen passing that username
+     * in an intent to the mains screen
+     * Created by Gareth Moore
      * @param adapterView
      * @param view
      * @param position
@@ -207,11 +223,6 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
      */
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//        List<PecsImages> list = new ArrayList<>();
-//        list = ops.getSentenceData();
-//        for (PecsImages image: list) {
-//            ops.deleteSentenceData(image.getId());
-//        }
         User user = userList.get(position);
         Intent intent = new Intent(this, MainScreen.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -221,7 +232,7 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
     }
 
     /**
-     *
+     * When a user profile is long clicked gives the option to update or delete
      * @param adapterView
      * @param view
      * @param position
@@ -250,6 +261,12 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
         return true;
     }
 
+    /**
+     * Method called when user wants to update the user profile
+     * Created by Gareth Moore
+     * @param activity
+     * @param userName
+     */
     private void showDialogUpdate(Activity activity, final String userName) {
 
         final Dialog dialog = new Dialog(activity);
@@ -261,11 +278,11 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
         Button btnUpdate = (Button) dialog.findViewById(R.id.btnUpdate2);
         ImageButton back = (ImageButton)dialog.findViewById(R.id.dialogClose2);
 
-
-
-
-        //String BASE_URL = "http://awsandroid.eu-west-1.elasticbeanstalk.com/project/getOneUser";
-//        String BASE_URL = "http://10.0.2.2:5000/project/getOneUser";
+        /**
+         * Volley request get the details of the user selected from the database to display in the pop up
+         * Created by Gareth Moore
+         */
+        //String BASE_URL = "http://10.0.2.2:5000/project/getOneUser";
         String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/getOneUser";
         String url = BASE_URL;
 
@@ -302,11 +319,6 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
             }
         });
 
-//        User updateUser = ops.getUser(userName, logName);
-//        Bitmap bitmap = BitmapFactory.decodeByteArray(updateUser.getImage(), 0, updateUser.getImage().length);
-//        imageView.setImageBitmap(bitmap);
-//        edtName.setText(updateUser.getUserName());
-
         // set width for dialog
         int width = (int) (activity.getResources().getDisplayMetrics().widthPixels * 0.95);
         // set height for dialog
@@ -322,6 +334,10 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
             }
         });
 
+        /**
+         * When update button os clicked a volley request is used to update the data for that user profile
+         * Created by Gareth Moore
+         */
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -331,8 +347,7 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
 //                            UserSelect.imageViewToByte(imageView), logName
 //                    );
                     final Integer userId = id;
-                    //String BASE_URL = "http://awsandroid.eu-west-1.elasticbeanstalk.com/project/updateUser";
-//                    String BASE_URL = "http://10.0.2.2:5000/project/updateUser";
+                    //String BASE_URL = "http://10.0.2.2:5000/project/updateUser";
                     String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/updateUser";
                     String url = BASE_URL;
 
@@ -351,14 +366,17 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
                         public void onSuccess(String result){
                             System.out.print("CALLBACK SUCCESS: " + result);
 
+                            /**
+                             * If successful the old user profile is removed from the grid view.
+                             * The new profile is then returned using a volley request and this is added to the grid view.
+                             * Created by Gareth Moore
+                             */
                             Iterator<User> iterator = userList.iterator();
                             while (iterator.hasNext()) {
                                 if(iterator.next().getUserName() == userName) {
                                     iterator.remove();
                                     userAdapter.notifyDataSetChanged();
-                                    //PecsImages item = ops.getItem(id);
-                                    //String BASE_URL = "http://awsandroid.eu-west-1.elasticbeanstalk.com/project/getOneUser";
-//                                    String BASE_URL = "http://10.0.2.2:5000/project/getOneUser";
+                                    //String BASE_URL = "http://10.0.2.2:5000/project/getOneUser";
                                     String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/getOneUser";
                                     String url = BASE_URL;
 
@@ -374,7 +392,6 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
                                         @Override
                                         public void onSuccess(String result){
                                             System.out.print("CALLBACK SUCCESS: " + result);
-
 
                                             JSONObject jsonObject = null;
                                             try {
@@ -409,26 +426,12 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
                 }
             }
         });
-
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dialog.dismiss();
             }
         });
-    }
-
-    /**
-     *
-     * @param image
-     * @return
-     */
-    public static byte[] imageViewToByte(ImageView image) {
-        Bitmap bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        return byteArray;
     }
 
     /**
@@ -578,6 +581,7 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
 
     /**
      * Method deletes an image from the list used to populate the GridView
+     * Created by Gareth Moore
      */
     private void showDialogDelete(final String userName) {
         final AlertDialog.Builder dialogDelete = new AlertDialog.Builder(UserSelect.this);
@@ -587,9 +591,12 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
         dialogDelete.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                /**
+                 * Volley request deleted user profile from the database
+                 * Created by Gareth Moore
+                 */
                 try {
-                    //String BASE_URL = "http://awsandroid.eu-west-1.elasticbeanstalk.com/project/delete`user";
-//                    String BASE_URL = "http://10.0.2.2:5000/project/deleteUser";
+                    //String BASE_URL = "http://10.0.2.2:5000/project/deleteUser";
                     String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/deleteUser";
                     String url = BASE_URL;
 
@@ -604,6 +611,11 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
                     request.serviceJsonCall(new VolleyCallBack(){
                         @Override
                         public void onSuccess(String result){
+                            /**
+                             * When the user profile is successfully deleted the grid view is updated
+                             * The number of users is then checked. If below five the create user button is enabled
+                             * Created by Gareth Moore
+                             */
                             System.out.print("CALLBACK SUCCESS: " + result);
                             Toast.makeText(UserSelect.this, "Success ", Toast.LENGTH_LONG).show();
                             Iterator<User> iterator = userList.iterator();
@@ -645,7 +657,6 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
                                         e.printStackTrace();
                                     }
                                 }
-
                                 @Override
                                 public void onError(ErrorResponse errorResponse){
                                     System.out.print("CALLBACK ERROR: " + errorResponse.getMessage());
@@ -673,7 +684,9 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
     }
 
     /**
-     * Method for the selection of the home button
+     * Method for the selection of the home button or the logout button
+     * If logout is selected the logName variable is set to null
+     * Created by Gareth Moore
      * @param item
      * @return
      */
@@ -696,7 +709,8 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
     }
 
     /**
-     *
+     * Method converts bitmap to string
+     * Created by Gareth Moore
      * @param bitmap
      * @return
      */
@@ -710,7 +724,7 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
 
 
     /**
-     *
+     * Inflates the menu layout
      * @param menu
      * @return
      */
@@ -726,6 +740,7 @@ public class UserSelect extends AppCompatActivity implements View.OnClickListene
 
     /**
      * onResume method
+     *
      */
     public void onResume() {
         super.onResume();

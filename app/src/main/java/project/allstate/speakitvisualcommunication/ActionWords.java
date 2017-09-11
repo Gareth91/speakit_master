@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by Gareth
+ * Created by Gareth Moore
  */
 public class ActionWords extends AppCompatActivity implements AdapterView.OnItemClickListener, TextToSpeech.OnInitListener {
 
@@ -32,27 +32,30 @@ public class ActionWords extends AppCompatActivity implements AdapterView.OnItem
     private int MY_DATA_CHECK_CODE = 0;
 
     /**
-     *
+     * List of image items
      */
     private List<PecsImages> imageWords;
 
     /**
-     *
+     * Instance of DatabaseOperations class
      */
     private DatabaseOperations ops;
 
 
     /**
-     *
+     * Image adapter used to populate grid view
      */
     private ImageAdapter imageAdapter;
 
+    /**
+     * onCreate method called when screen is first created
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_action_words);
 
-        //
         ops = new DatabaseOperations(getApplicationContext());
         ops.open();
 
@@ -61,21 +64,22 @@ public class ActionWords extends AppCompatActivity implements AdapterView.OnItem
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
 
+        /**
+         * Makes the activity appear as a pop up over the previous activity
+         * Created by Gareth Moore
+         */
         DisplayMetrics display = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(display);
-
         WindowManager.LayoutParams windowManager = getWindow().getAttributes();
         windowManager.dimAmount = 0.75f;
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-
         int width = display.widthPixels;
         int height = display.heightPixels;
-
         getWindow().setLayout((int)(width*0.9), (int)(height*0.9));
 
-        //
         imageWords = new ArrayList<>();
         imageWords.clear();
+
         /**
          * Array containing PecsImages objects which take an image from
          * drawable resource
@@ -127,12 +131,16 @@ public class ActionWords extends AppCompatActivity implements AdapterView.OnItem
             imageWords.add(s);
 
         }
+
+        //Grid view is referenced and items added using image adapter
+        //Created by Gareth Moore
         final GridView gridView = (GridView)findViewById(R.id.gridviewThird);
         imageAdapter = new ImageAdapter(this, imageWords, "Action Words");
         gridView.setAdapter(imageAdapter);
         gridView.setOnItemClickListener(this);
 
         //check for TTS data
+        //Created by Gareth Moore
         Intent checkTTSIntent = new Intent();
         checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
         startActivityForResult(checkTTSIntent, MY_DATA_CHECK_CODE);
@@ -140,6 +148,7 @@ public class ActionWords extends AppCompatActivity implements AdapterView.OnItem
 
     /**
      * Method for the selection of the home button
+     * Created by Gareth Moore
      * @param item
      * @return
      */
@@ -155,7 +164,8 @@ public class ActionWords extends AppCompatActivity implements AdapterView.OnItem
     }
 
     /**
-     *
+     * Sets up item clicks on items within the grid view
+     * Created by Gareth Moore
      * @param adapterView
      * @param view
      * @param position
@@ -167,6 +177,7 @@ public class ActionWords extends AppCompatActivity implements AdapterView.OnItem
         speakWords(image.getWord());
         //
         if (image.getNumber() == 1) {
+            //If a drawable has to be converted
             Drawable drawable = getResources().getDrawable(image.getImage());
             Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -174,12 +185,14 @@ public class ActionWords extends AppCompatActivity implements AdapterView.OnItem
             byte[] bitMapData = stream.toByteArray();
             image.setImages(bitMapData);
         }
+        //Adds the item to the sentence table
         ops.insertSentenceData(image.getWord(),image.getImages());
     }
 
 
     /**
-     *
+     * Method used to speak
+     * Created by Gareth Moore
      * @param speech
      */
     private void speakWords(String speech) {
@@ -189,7 +202,8 @@ public class ActionWords extends AppCompatActivity implements AdapterView.OnItem
     }
 
     /**
-     * act on result of TTS data check
+     * Act on result of TTS data check
+     * Created by Gareth Moore
      */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -208,7 +222,8 @@ public class ActionWords extends AppCompatActivity implements AdapterView.OnItem
     }
 
     /**
-     *
+     * Sets up the text to speech language
+     * Created by Gareth Moore
      * @param initStatus
      */
     @Override
@@ -227,6 +242,8 @@ public class ActionWords extends AppCompatActivity implements AdapterView.OnItem
 
     /**
      * onResume method
+     * Opens SQlite database
+     * Created by Gareth Moore
      */
     public void onResume() {
         super.onResume();
@@ -236,7 +253,8 @@ public class ActionWords extends AppCompatActivity implements AdapterView.OnItem
     }
 
     /**
-     *onStop method closes the event listener
+     *onStop method closes SQLite database
+     * Created by Gareth Moore
      */
     @Override
     public void  onStop() {
@@ -245,7 +263,9 @@ public class ActionWords extends AppCompatActivity implements AdapterView.OnItem
     }
 
     /**
-     * When the activity is finished the method will close the  SQLite database.
+     * When the activity is finished the method will close the  SQLite database and
+     * close the text to speech
+     * Created by Gareth Moore
      */
     @Override
     public void onDestroy() {
@@ -256,6 +276,5 @@ public class ActionWords extends AppCompatActivity implements AdapterView.OnItem
             myTTS.stop();
             myTTS.shutdown();
         }
-
     }
 }

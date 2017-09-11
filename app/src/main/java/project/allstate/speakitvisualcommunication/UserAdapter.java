@@ -13,9 +13,9 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
+ * Populates the grid view in the user select page
  * Created by Gareth on 07/08/2017.
  */
-
 public class UserAdapter extends BaseAdapter {
 
     /**
@@ -66,7 +66,8 @@ public class UserAdapter extends BaseAdapter {
     }
 
     /**
-     *
+     * Adds the items to the view
+     * Created by Gareth Moore
      * @param position
      * @param convertView
      * @param parent
@@ -99,7 +100,8 @@ public class UserAdapter extends BaseAdapter {
     }
 
     /**
-     *
+     *The view holder that holds references to each subview
+     * Created by Gareth Moore
      */
     private class ViewHolder {
 

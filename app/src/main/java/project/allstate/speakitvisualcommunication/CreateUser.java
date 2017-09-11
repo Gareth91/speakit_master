@@ -37,7 +37,8 @@ import project.allstate.speakitvisualcommunication.volley.VolleyHelp;
 import project.allstate.speakitvisualcommunication.volley.VolleyRequest;
 
 /**
- * Created by Gareth
+ * Class that adds functionality to the create user page
+ * Created by Gareth Moore
  */
 public class CreateUser extends AppCompatActivity {
 
@@ -55,19 +56,12 @@ public class CreateUser extends AppCompatActivity {
      *
      */
     ImageView imageView;
-    //Spinner spinner;
 
     /**
      *
      */
     private String userChosen;
 
-    /**
-     *
-     */
-    private String categorySelected;
-
-    //private String[] categoryArray = {"Home Page", "Favourites", "At Home", "About Me", "Food and Drink", "Greetings", "Leisure", "Today's Activities"};
 
     /**
      *
@@ -84,10 +78,6 @@ public class CreateUser extends AppCompatActivity {
      */
     private DatabaseOperations ops;
 
-    /**
-     *
-     */
-    private String user;
 
     /**
      *

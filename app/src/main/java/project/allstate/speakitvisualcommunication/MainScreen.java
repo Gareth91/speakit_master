@@ -57,7 +57,7 @@ import project.allstate.speakitvisualcommunication.volley.VolleyRequest;
 import static project.allstate.speakitvisualcommunication.SQLiteHelper.category;
 
 /**
- * Created by Gareth
+ * Created by Gareth Moore
  * Class used to create the main screen of the app
  */
 public class MainScreen extends AppCompatActivity implements AdapterView.OnItemClickListener, TextToSpeech.OnInitListener, View.OnClickListener, View.OnLongClickListener{
@@ -93,7 +93,7 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
     private GridView gridView;
 
     /**
-     *
+     * The user chosen
      */
     private String userChosen;
 
@@ -108,7 +108,7 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
     final int REQUEST_IMAGE_CAPTURE = 0;
 
     /**
-     *
+     * The login account name
      */
     private String logName = null;
 
@@ -158,11 +158,6 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
     private List<PecsImages> sentenceWords;
 
     /**
-     *
-     */
-    List<PecsImages> list2 = new ArrayList<PecsImages>();
-
-    /**
      * User
      */
     String user = null;
@@ -178,29 +173,37 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
-
-       // ServerMain serverMain = new ServerMain();
-       // serverMain.ImageWord(MainScreen.this);
-
         // Open a connection with the SQLite database using
         // instance of the DatabaseOperations class
         ops = new DatabaseOperations(getApplicationContext());
         ops.open();
 
+        //Gets the username that has been selected on other screens
+        //Also gets the login nae from the DataHolder class
+        //Created by Gareth Moore
         Intent intent = getIntent();
         user = intent.getStringExtra("project.allstate.speakitvisualcommunication.username");
         user2 = intent.getStringExtra("project.allstate.speakitvisualcommunication.username2");
         logName = DataHolder.getInstance().getLogin();
 
+        /**
+         * Add the array containing PecsImages objects to the
+         * imageCategories list which is then added to the GridView
+         * using the ImageAdapter class
+         * Created by Gareth Moore
+         */
         imageCategories = new ArrayList<>(Arrays.asList(categories));
-
         gridView = (GridView)findViewById(R.id.gridview);
         imageAdapter = new ImageAdapter(this, imageCategories);
         gridView.setAdapter(imageAdapter);
 
-        // Add the array containing PecsImages objects to the
-        // imageCategories list which is then added to the GridView
-        // using the ImageAdapter class
+        /**
+         * Volley request is used to add any uploaded image objects to the grid view
+         * for the specific user that is selected.
+         * The intent passing the user can arrive here from two different screens which is why there is an if statement
+         * to determine which user variable to use.
+         * Created by Gareth Moore
+         */
         if (user != null && user2 == null) {
             //List<PecsImages> list2 = ops.getData("Home Page", user);
             //String BASE_URL = "http://10.0.2.2:5000/project/return";
@@ -244,6 +247,7 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
                 @Override
                 public void onError(ErrorResponse errorResponse){
                     System.out.print("CALLBACK ERROR: " + errorResponse.getMessage());
+                    Toast.makeText(MainScreen.this, "Unsuccessful ", Toast.LENGTH_SHORT).show();
                 }
             });
         } else if (user == null && user2 != null) {
@@ -264,7 +268,6 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
                 @Override
                 public void onSuccess(String result){
                     System.out.print("CALLBACK SUCCESS: " + result);
-                    Toast.makeText(MainScreen.this, "Success ", Toast.LENGTH_LONG).show();
 
                     JSONArray jsonarray = null;
                     try {
@@ -289,6 +292,7 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
                 @Override
                 public void onError(ErrorResponse errorResponse){
                     System.out.print("CALLBACK ERROR: " + errorResponse.getMessage());
+                    Toast.makeText(MainScreen.this, "Unsuccessful ", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -296,21 +300,17 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
             user = user2;
         }
 
-
+        //Clears any images in the sentence builder
+        //Created by Gareth Moore
         List<PecsImages> list = new ArrayList<>();
         list = ops.getSentenceData();
         for (PecsImages image: list) {
             ops.deleteSentenceData(image.getId());
         }
 
-        // List sentence words is created and then PecsImages objects
-        // in the sentence table ar added to the list using method from DatabaseOperations class.
+        // The SentenceBuilderAdapter sets up the RecyclerView
+        //Created by Gareth Moore
         sentenceWords = new ArrayList<>();
-        //List<PecsImages> list = new ArrayList<>();
-        //list = ops.getSentenceData();
-        //sentenceWords.addAll(list);
-        // sentenceWords List is then added to the RecyclerView using
-        // SentenceBuilderAdapter class.
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mAdapter = new SentenceBuilderAdapter(sentenceWords);
         RecyclerView.LayoutManager mLayoutManage = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -319,6 +319,7 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
 
 
         // onItemClickListener setup on GridView to allow images to be selected
+        //Created by Gareth Moore
         gridView.setOnItemClickListener(this);
 
 
@@ -353,18 +354,17 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
         });
 
         //check for TTS data
+        //Created by Gareth Moore
         Intent checkTTSIntent = new Intent();
         checkTTSIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
         startActivityForResult(checkTTSIntent, MY_DATA_CHECK_CODE);
 
-        //onClickListener setup with play and delete button. This allows either the sentence
-        //in the RecyclerView to be spoken out allowed or for an image to be deleted from
+        //onClickListener setup with delete button. This allows for an image to be deleted from
         //the sentence builder.
+        //Created by Gareth Moore
         ImageButton cancelButton = (ImageButton) findViewById(R.id.deleteB);
         cancelButton.setOnClickListener(this);
         cancelButton.setOnLongClickListener(this);
-        //ImageButton playButton = (ImageButton) findViewById(R.id.speakB);
-        //playButton.setOnClickListener(this);
 
     }
 
@@ -375,6 +375,7 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
      * @param view
      * @param position
      * @param id
+     * Created by Gareth Moore
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -414,8 +415,9 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
     }
 
     /**
-     *Method adds functionality to click events on the add or delete button.
+     *Method adds functionality to click events on the delete button.
      * @param view
+     * Created by Gareth Moore
      */
     @Override
     public void onClick(View view) {
@@ -443,6 +445,12 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
         }
     }
 
+    /**
+     * Adds long Click functionality to the sentence builder delete button
+     * @param v
+     * @return
+     * Created by Gareth Moore
+     */
     @Override
     public boolean onLongClick(View v) {
         switch (v.getId()) {
@@ -464,6 +472,7 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
     /**
      * Method called to speak words aloud
      * @param speech
+     * Created by Gareth Moore
      */
     private void speakWords(String speech) {
 
@@ -474,8 +483,9 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
     /**
 
     /**
-     *
+     *Method sets up the text to speech language
      * @param initStatus
+     * Created by Gareth Moore
      */
     @Override
     public void onInit(int initStatus) {
@@ -493,8 +503,9 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
 
     /**
      * Method called when update is selected when user has clicked and held on an item within GridView.
-     * This method will delete a PecsImages object from the list and remove it from the screen. It will also then update
+     * This method will update a PecsImages object from the list. It will also then update
      * the database.
+     * Created by Gareth Moore
      * @param activity
      * @param id
      */
@@ -509,7 +520,10 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
         Button btnUpdate = (Button) dialog.findViewById(R.id.btnUpdate);
         ImageButton back = (ImageButton)dialog.findViewById(R.id.dialogClose);
 
-        //String BASE_URL = "http://awsandroid.eu-west-1.elasticbeanstalk.com/project/getOneUser";
+        /**
+         * Volley request set up to get the information on the object that has been selected to update.
+         * Created by Gareth Moore
+         */
         //String BASE_URL = "http://10.0.2.2:5000/project/getOne";
         String BASE_URL = "http://awsandroid-env.gxjm8mxvzx.eu-west-1.elasticbeanstalk.com/project/getOne";
         String url = BASE_URL;
@@ -565,16 +579,24 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
             }
         });
 
+        /**
+         * When update button is clicked a volley request will be sent to update the information in the database
+         * Created by Gareth Moore
+         */
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
+                    //Original method set up to mimic what would happen when image is brought in from database
 //                    ops.updateData(
 //                            edtName.getText().toString().trim(),
 //                            Uploader.imageViewToByte(pecsView), "Home Page",
 //                            id
 //                    );
-
+                    /**
+                     * Volley request used to upadate the data within the database
+                     * Created by Gareth Moore
+                     */
                     final Integer userId = id;
                     //String BASE_URL = "http://awsandroid.eu-west-1.elasticbeanstalk.com/project/updateData";
                     //String BASE_URL = "http://10.0.2.2:5000/project/updateData";
@@ -598,6 +620,12 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
                         public void onSuccess(String result){
                             System.out.print("CALLBACK SUCCESS: " + result);
 
+                            /**
+                             * As information has been successfully updated the original image object
+                             * is removed from the list then a volley request returns the updated image
+                             * and this is added to the list and the image adapter is notified
+                             * Created by Gareth Moore
+                             */
                             Iterator<PecsImages> iterator = imageCategories.iterator();
                             while (iterator.hasNext()) {
                                 if(iterator.next().getId() == id) {
@@ -671,6 +699,7 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
 
     /**
      * Method deletes an image from the list used to populate the GridView
+     * Created by Gareth Moore
      * @param idPecs
      */
     private void showDialogDelete(final int idPecs) {
@@ -682,6 +711,12 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 try {
+                    /**
+                     * Volley request deletes the image object from the database. If successful
+                     * the image object is removed from the list used to populate grid view
+                     * and the image adapter is notified
+                     * Created by Gareth Moore
+                     */
                     Integer deleteId = idPecs;
                     //String BASE_URL = "http://awsandroid.eu-west-1.elasticbeanstalk.com/project/deleteData";
                     //String BASE_URL = "http://10.0.2.2:5000/project/deleteData";
@@ -811,7 +846,9 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
     }
 
     /**
-     *
+     * Method checks the data is available to use text to speech
+     * Created by Gareth Moore
+     * Also checks the data for the camera and gallery
      * @param requestCode
      * @param resultCode
      * @param data
@@ -894,6 +931,8 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
 
     /**
      * onResume method
+     * Opens the SQLite database and updates the list used to populate the sentence builder
+     * Created by Gareth Moore
      */
     public void onResume() {
         super.onResume();
@@ -910,7 +949,7 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
     }
 
     /**
-     *
+     * Creates a menu icon
      * @param menu
      * @return
      */
@@ -923,8 +962,15 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
     }
 
     /**
-     * On selecting action bar icons
-     * */
+     * If menu item is clicked method is called.
+     * If it is the user select item and the login name is null takes user to login page
+     * If it is the user select item and the login name is not null takes user to user select page
+     * If it is play icon builds a string from the image object words in the sentence builder and then call speakWords
+     * to speak the sentence.
+     * Created by Gareth Moore
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Take appropriate action for each action item click
@@ -954,7 +1000,8 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
 
 
     /**
-     *
+     * Converts the bitmap to a string
+     * Created by Gareth Moore
      * @param bitmap
      * @return
      */
@@ -968,7 +1015,8 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
 
 
     /**
-     *onStop method closes database
+     *onStop method
+     * Created by Gareth Moore
      */
     @Override
     public void  onStop() {
@@ -979,6 +1027,8 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
 
     /**
      * When the activity is finished the method will close the  SQLite database.
+     * Also closes the text to speech to prevent any data leaks
+     * Created by Gareth Moore
      */
     @Override
     public void onDestroy() {
@@ -993,8 +1043,5 @@ public class MainScreen extends AppCompatActivity implements AdapterView.OnItemC
             myTTS.shutdown();
         }
     }
-
-
-
 }
 

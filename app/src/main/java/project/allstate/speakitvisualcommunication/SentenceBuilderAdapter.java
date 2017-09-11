@@ -9,27 +9,30 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import project.allstate.speakitvisualcommunication.R;
-
 import java.util.List;
 
 /**
+ * Populates the RecyclerView
  * Created by Gareth on 31/07/2017.
  */
 
 public class SentenceBuilderAdapter extends RecyclerView.Adapter<SentenceBuilderAdapter.MyViewHolder> {
 
+    /**
+     * List of Image objects
+     */
     private List<PecsImages> imagesList;
 
     /**
-     *
+     * View holder
+     * Created by Gareth Moore
      */
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView textView;
         public ImageView imageView;
 
         /**
-         *
+         * Constructor for view holder
          * @param view
          */
         public MyViewHolder(View view) {
@@ -42,7 +45,7 @@ public class SentenceBuilderAdapter extends RecyclerView.Adapter<SentenceBuilder
     }
 
     /**
-     *
+     * Constructor
      * @param imagesList
      */
     public SentenceBuilderAdapter(List<PecsImages> imagesList) {
@@ -51,7 +54,8 @@ public class SentenceBuilderAdapter extends RecyclerView.Adapter<SentenceBuilder
 
 
     /**
-     *
+     * Inflate the layout responsible for the items in the view
+     * Created by Gareth Moore
      * @param parent
      * @param viewType
      * @return
@@ -65,7 +69,8 @@ public class SentenceBuilderAdapter extends RecyclerView.Adapter<SentenceBuilder
     }
 
     /**
-     *
+     * Populate the recycler view
+     * Created by Gareth Moore
      * @param holder
      * @param position
      */
@@ -83,7 +88,6 @@ public class SentenceBuilderAdapter extends RecyclerView.Adapter<SentenceBuilder
 
 
     }
-
 
     /**
      *

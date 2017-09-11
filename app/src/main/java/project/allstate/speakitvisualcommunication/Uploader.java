@@ -39,37 +39,35 @@ import project.allstate.speakitvisualcommunication.volley.VolleyHelp;
 import project.allstate.speakitvisualcommunication.volley.VolleyRequest;
 
 /**
- * Created by Gareth
+ * Class involved in the upload of new Image objects
+ * Created by Gareth Moore
  */
 public class Uploader extends AppCompatActivity {
 
     /**
-     *
+     * An EditText
      */
     EditText edtName;
 
     /**
-     *
+     * Buttons
      */
     Button btnChoose, btnAdd;
 
     /**
-     *
+     * ImageView
      */
     ImageView imageView;
-    //Spinner spinner;
 
     /**
-     *
+     * The user chosen
      */
     private String userChosen;
 
     /**
-     *
+     * The category selcted
      */
     private String categorySelected;
-
-    //private String[] categoryArray = {"Home Page", "Favourites", "At Home", "About Me", "Food and Drink", "Greetings", "Leisure", "Today's Activities"};
 
     /**
      *
@@ -82,22 +80,22 @@ public class Uploader extends AppCompatActivity {
     final int REQUEST_IMAGE_CAPTURE = 0;
 
     /**
-     *
+     * Database operations class
      */
     private DatabaseOperations ops;
 
     /**
-     *
+     * The user
      */
     private String user;
 
     /**
-     *
+     * The login name of the account
      */
     private String logName;
 
     /**
-     *
+     * A spinner
      */
     private ProgressBar spinner;
 
@@ -119,10 +117,13 @@ public class Uploader extends AppCompatActivity {
         setContentView(R.layout.activity_uploader);
 
         //Set back button in the bar at the top of screen
+        //Created by Gareth Moore
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_button);
 
+        //Spinner used to show if page is loading
+        //Created by Gareth Moore
         spinner = (ProgressBar)findViewById(R.id.progressBar1);
         spinner.setVisibility(View.GONE);
 
@@ -158,6 +159,13 @@ public class Uploader extends AppCompatActivity {
         });
 
 
+        /**
+         * Volley request is set up in the onClick method
+         * This will insert the image object into the database
+         * If successful user is taken either to the main screen or second screen depending on the category.
+         * If unsuccessful user remains on the page and the update button is made availbale again.
+         * Created by Gareth Moore
+         */
         btnAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -211,6 +219,7 @@ public class Uploader extends AppCompatActivity {
                                 System.out.print("CALLBACK ERROR: " + errorResponse.getMessage());
                                 btnAdd.setEnabled(true);
                                 spinner.setVisibility(View.GONE);
+                                Toast.makeText(Uploader.this, "Opps, word is too long", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -220,19 +229,6 @@ public class Uploader extends AppCompatActivity {
                 }
         });
 
-    }
-
-    /**
-     *
-     * @param image
-     * @return
-     */
-    public static byte[] imageViewToByte(ImageView image) {
-        Bitmap bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        return byteArray;
     }
 
     /**
@@ -409,8 +405,10 @@ public class Uploader extends AppCompatActivity {
 
 
     /**
-     * Method for the selection of the home button
+     * Method for the selection of the home button or the menu icon
+     * Created by Gareth Moore
      * @param item
+     *        - the menu item
      * @return
      */
     @Override
@@ -430,8 +428,10 @@ public class Uploader extends AppCompatActivity {
 
 
     /**
-     *
+     * Method converts the bitmap image to a string
+     * Created by Gareth Moore
      * @param bitmap
+     *      - The bitmap image
      * @return
      */
     public String BitMapToString(Bitmap bitmap){
@@ -443,7 +443,10 @@ public class Uploader extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Below is an alternative method for the camera and gallery functionality which has been commented out.
+     * Created by Gareth Moore
+     */
     //private void dispatchTakePictureIntent(int actionCode) {
 
         //Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -579,6 +582,7 @@ public class Uploader extends AppCompatActivity {
 
     /**
      * onResume method
+     * Created by Gareth Moore
      */
     public void onResume() {
         super.onResume();
@@ -589,6 +593,7 @@ public class Uploader extends AppCompatActivity {
 
     /**
      *onStop method closes the SQLIte database
+     * Created by Gareth Moore
      */
     @Override
     public void  onStop() {
@@ -598,6 +603,7 @@ public class Uploader extends AppCompatActivity {
 
     /**
      * When the activity is finished the method will close the SQLite database.
+     * Created by Gareth Moore
      */
     @Override
     public void onDestroy() {
